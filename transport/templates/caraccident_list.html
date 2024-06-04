@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">CRUD</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">CRUD</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                CRUD List
+                <a class="btn btn-sm btn-success" href="{% url 'transport:create' %}" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+            </div>
+            <div class="card-body">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>發生年度</th>
+                        <th>發生月份</th>
+                        <th>發生日期</th>
+                        <th>事故類別名稱</th>
+                        <th>處理單位名稱警局層</th>
+                        <th>發生地點</th>
+                        <th>Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for record in caraccident_list %}
+                        <tr>
+                            <td>{{ record.id }}</td>
+                            <td>{{ record.發生年度 }}</td>
+                            <td>{{ record.發生月份 }}</td>
+                            <td>{{ record.發生日期 }}</td>
+                            <td>{{ record.事故類別名稱 }}</td>
+                            <td>{{ record.處理單位名稱警局層 }}</td>
+                            <td>{{ record.發生地點 }}</td>
+                            <td>
+                                {% comment %} <a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"> <span class="fa fa-edit"></span> Edit</a>
+                                <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a> {% endcomment %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}
