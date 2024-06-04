@@ -46,6 +46,10 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
+
+    # 3rd party apps
+    "chartjs",
+
     # app
     "transport",
     "transport_subsidiary",
