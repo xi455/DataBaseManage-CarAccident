@@ -16,6 +16,9 @@ from transport.models import (
         TrafficFacilities,
         RoadConditions,
     )
+from transport.forms import CombinedForm
+from transport_subsidiary.models import UnitName, VehicleType
+
 # Create your views here.
 class indexTemplateView(TemplateView):
     template_name = "index.html"
@@ -37,8 +40,40 @@ class CarAccidentListView(generic.ListView):
     queryset = AccidentRecords.objects.all()[:50]
     order="-發生日期"
 
-class AccidentRecordsCreateView(CreateView):
-    model = AccidentRecords
-    fields = "__all__"
-    template_name = "accidentrecords_create.html"
-    success_url = reverse_lazy("transport:list")
+
+class CarAccidentCreateView(generic.View):
+    template_name = "caraccident_create.html"
+
+    def get(self, request, *args, **kwargs):
+        form = CombinedForm()
+
+        context = {
+            "form": form,
+        }
+
+        return render(request, self.template_name, context=context)
+
+    def post(self, request, *args, **kwargs):
+        form = CombinedForm(request.POST)
+
+        if form.is_valid():
+            accident = {k[len("accident-"):]: v for k, v in form.data.items() if k.startswith('accident-')}
+            accident["處理單位名稱警局層"] = get_object_or_404(UnitName, pk=accident["處理單位名稱警局層"])
+            accident = AccidentRecords(**accident)
+
+            party = {k[len("party-"):]: v for k, v in form.data.items() if k.startswith('party-')}
+            party["當事者區分_類別_大類別名稱_車種"] = get_object_or_404(VehicleType, pk=party["當事者區分_類別_大類別名稱_車種"])
+            party["accident_id"] = accident
+            party = PartyInfo(**party)
+
+            accident.save()
+            party.save()
+
+            messages.success(request, "Car accident record created successfully.")
+            return redirect('transport:list')
+        
+        context = {
+            "form": form,
+        }
+
+        return render(request, self.template_name, context=context)

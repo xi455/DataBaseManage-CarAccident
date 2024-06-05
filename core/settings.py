@@ -49,6 +49,7 @@ INSTALLED_APPS = [
 
     # 3rd party apps
     "chartjs",
+    "widget_tweaks",
 
     # app
     "transport",

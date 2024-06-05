@@ -8,7 +8,15 @@ class AccidentRecords(models.Model):
     發生月份 = models.CharField(max_length=2)
     發生日期 = models.CharField(max_length=8)
     發生時間 = models.CharField(max_length=6)
-    事故類別名稱 = models.CharField(max_length=2)
+    
+    class AccidentType(models.TextChoices):
+        FIRST_ACCIDENTTYPE = "A1", "A1"
+        SECOND_ACCIDENTTYPE = "A2", "A2"
+
+
+    事故類別名稱 = models.CharField(
+        max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
+    )
     處理單位名稱警局層 = models.ForeignKey(UnitName, on_delete=models.CASCADE)
     發生地點 = models.CharField(max_length=80)
 
@@ -122,7 +130,23 @@ class PartyInfo(models.Model):
         choices=ActionStatus.choices,
         default=ActionStatus.FIRST_ACTIONSTATUS,
     )
-    車輛撞擊部位子類別名稱_最初 = models.CharField(max_length=10)
+
+    class VehicleImpactPartSubcategoryNameInitial(models.TextChoices):
+        FIRST_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "左前車頭(身)", "左前車頭(身)"
+        SECOND_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "非汽(機)車", "非汽(機)車"
+        THIRD_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "後車尾", "後車尾"
+        FOURTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "左側車身", "左側車身"
+        FIFTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "右後車尾(身)", "右後車尾(身)"
+        SIXTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "車底", "車底"
+        SEVENTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "不明", "不明"
+        EIGHTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "右側車身", "右側車身"
+        NINETH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "車頂", "車頂"
+        TENTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "右前車頭(身)", "右前車頭(身)"
+        ELEVENTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "左後車尾(身)", "左後車尾(身)"
+        TWELFTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL = "前車頭", "前車頭"
+
+
+    車輛撞擊部位子類別名稱_最初 = models.CharField(max_length=10, choices=VehicleImpactPartSubcategoryNameInitial.choices, default=VehicleImpactPartSubcategoryNameInitial.FIRST_VEHICLEIMPACTPARTSUBCATEGORYNAMEINITIAL)
 
     class VehicleCategories(models.TextChoices):
         FIRST_VEHICLECATEGORIES = "無", "無"
@@ -135,7 +159,22 @@ class PartyInfo(models.Model):
         choices=VehicleCategories.choices,
         default=VehicleCategories.FIRST_VEHICLECATEGORIES,
     )
-    車輛撞擊部位子類別名稱_其他 = models.CharField(max_length=10)
+
+    class VehicleImpactPartSubcategoryNameOther(models.TextChoices):
+        FIRST_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "左前車頭(身)", "左前車頭(身)"
+        SECOND_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "非汽(機)車", "非汽(機)車"
+        THIRD_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "後車尾", "後車尾"
+        FOURTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "左側車身", "左側車身"
+        FIFTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "右後車尾(身)", "右後車尾(身)"
+        SIXTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "車底", "車底"
+        SEVENTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "不明", "不明"
+        EIGHTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "右側車身", "右側車身"
+        NINETH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "車頂", "車頂"
+        TENTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "右前車頭(身)", "右前車頭(身)"
+        ELEVENTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "左後車尾(身)", "左後車尾(身)"
+        TWELFTH_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER = "前車頭", "前車頭"
+
+    車輛撞擊部位子類別名稱_其他 = models.CharField(max_length=10, choices=VehicleImpactPartSubcategoryNameOther.choices, default=VehicleImpactPartSubcategoryNameOther.FIRST_VEHICLEIMPACTPARTSUBCATEGORYNAMEOTHER)
 
     class Meta:
         verbose_name = "肇事人紀錄"
