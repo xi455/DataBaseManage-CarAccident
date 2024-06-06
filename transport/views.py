@@ -9,6 +9,8 @@ from django.views import generic
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 
+from django.contrib.auth.models import User
+
 from transport.models import (
         AccidentRecords,
         PartyInfo,
@@ -20,6 +22,22 @@ from transport.forms import CombinedForm
 from transport_subsidiary.models import UnitName, VehicleType
 
 # Create your views here.
+
+class UserListView(generic.ListView):
+    model = User
+    template_name = "registration/user_list.html"
+    context_object_name = "user_list"
+    queryset = User.objects.all()[:50]
+    order="-date_joined"
+
+
+class UserDeleteView(generic.DeleteView):
+    model = User
+    template_name = "registration/user_delete.html"
+    context_object_name = "user"
+    success_url = reverse_lazy("user_list")
+
+
 class indexTemplateView(TemplateView):
     template_name = "index.html"
     

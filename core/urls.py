@@ -20,11 +20,16 @@ from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
 from django.views.generic import RedirectView
+from transport.views import UserListView, UserDeleteView
 
 urlpatterns = [
     path("", RedirectView.as_view(url="transport/"), name="index"),
     path("admin/", admin.site.urls),
     path("transport/", include("transport.urls", namespace="transport")),
+
+    path("accounts/", include("django.contrib.auth.urls")),
+    path("accounts/list/", UserListView.as_view(), name="user_list"),
+    path("accounts/delete/<pk>", UserDeleteView.as_view(), name="user_delete"),
 ]
 
 urlpatterns += static(
