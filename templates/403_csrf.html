@@ -1,0 +1,42 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div id="content-wrapper">
+
+        <div class="container-fluid">
+
+            <!-- Breadcrumbs-->
+            <ol class="breadcrumb">
+            <li class="breadcrumb-item">
+                <a href="{% url "index" %}">Dashboard</a>
+            </li>
+            <li class="breadcrumb-item active">403 Error</li>
+            </ol>
+
+            <div class="d-flex flex-column align-items-center" style="margin-top: 13rem;">
+                <!-- Page Content -->
+                <h1 class="display-1">403</h1>
+                <p class="lead">Permission denied. You can
+                <a href="javascript:history.back()">go back</a>
+                to the previous page, or
+                <a href="{% url "index" %}">return home</a>.</p>
+            </div>
+        </div>
+      <!-- /.container-fluid -->
+
+      <!-- Sticky Footer -->
+      <footer class="sticky-footer">
+        <div class="container my-auto">
+          <div class="copyright text-center my-auto">
+            <span>Copyright © Your Website 2024</span>
+          </div>
+        </div>
+      </footer>
+
+    </div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

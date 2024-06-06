@@ -50,7 +50,7 @@ class PartyInfoForm(forms.ModelForm):
 
     def __init__(self, *args, **kwargs):
         super(PartyInfoForm, self).__init__(*args, **kwargs)
-        self.fields['當事者區分_類別_大類別名稱_車種'].initial = VehicleType.objects.first()
+        # self.fields['當事者區分_類別_大類別名稱_車種'].initial = VehicleType.objects.first()
 
 
 class CauseAnalysisForm(forms.ModelForm):

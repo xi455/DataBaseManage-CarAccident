@@ -8,8 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
-
-from django.contrib.auth.models import User
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from transport.models import (
         AccidentRecords,
@@ -22,20 +21,6 @@ from transport.forms import CombinedForm
 from transport_subsidiary.models import UnitName, VehicleType
 
 # Create your views here.
-
-class UserListView(generic.ListView):
-    model = User
-    template_name = "registration/user_list.html"
-    context_object_name = "user_list"
-    queryset = User.objects.all()[:50]
-    order="-date_joined"
-
-
-class UserDeleteView(generic.DeleteView):
-    model = User
-    template_name = "registration/user_delete.html"
-    context_object_name = "user"
-    success_url = reverse_lazy("user_list")
 
 
 class indexTemplateView(TemplateView):
@@ -51,7 +36,7 @@ class indexTemplateView(TemplateView):
         return context
     
 
-class CarAccidentListView(generic.ListView):
+class CarAccidentListView(LoginRequiredMixin, generic.ListView):
     model = AccidentRecords
     template_name = "caraccident_list.html"
     context_object_name = "caraccident_list"
@@ -59,7 +44,7 @@ class CarAccidentListView(generic.ListView):
     order="-發生日期"
 
 
-class CarAccidentCreateView(generic.View):
+class CarAccidentCreateView(LoginRequiredMixin, generic.View):
     template_name = "caraccident_create.html"
 
     def get(self, request, *args, **kwargs):
