@@ -20,6 +20,8 @@ from transport.models import (
 from transport.forms import CombinedForm
 from transport_subsidiary.models import UnitName, VehicleType
 
+from utils.perms import GroupPerms
+
 # Create your views here.
 
 
@@ -36,7 +38,7 @@ class indexTemplateView(TemplateView):
         return context
     
 
-class CarAccidentListView(LoginRequiredMixin, generic.ListView):
+class CarAccidentListView(GroupPerms, generic.ListView):
     model = AccidentRecords
     template_name = "caraccident_list.html"
     context_object_name = "caraccident_list"
@@ -44,7 +46,7 @@ class CarAccidentListView(LoginRequiredMixin, generic.ListView):
     order="-發生日期"
 
 
-class CarAccidentCreateView(LoginRequiredMixin, generic.View):
+class CarAccidentCreateView(GroupPerms, generic.View):
     template_name = "caraccident_create.html"
 
     def get(self, request, *args, **kwargs):

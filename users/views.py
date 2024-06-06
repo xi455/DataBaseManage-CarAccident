@@ -9,7 +9,7 @@ from django.views import generic
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from users.perms import GroupPerms
+from utils.perms import GroupPerms
 
 from users.models import User
 from django.contrib.auth.views import PasswordChangeView
