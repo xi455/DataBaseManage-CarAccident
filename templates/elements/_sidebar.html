@@ -10,14 +10,6 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-fw fa-database"></i></div>
                 CRUD App
             </a>
-            {% comment %} <a class="nav-link" href="{% url 'fileupload' %}"> {% endcomment %}
-                <div class="sb-nav-link-icon"><i class="fas fa-fw fa-tables"></i></div>
-                File Upload
-            </a>
-            {% comment %} <a class="nav-link" href="{% url 'ajax' %}"> {% endcomment %}
-                <div class="sb-nav-link-icon"><i class="fas fa-fw fa-bullseye"></i></div>
-                Ajax Crud
-            </a>
             <div class="sb-sidenav-menu-heading">Interface</div>
             <a class="nav-link collapsed" href="#" data-bs-toggle="collapse" data-bs-target="#collapseLayouts" aria-expanded="false" aria-controls="collapseLayouts">
                 <div class="sb-nav-link-icon"><i class="fas fa-columns"></i></div>
@@ -39,7 +31,7 @@
                     {% comment %} <a class="nav-link collapsed" href="{% url 'upload_csv' %}"> {% endcomment %}
                         CSV Upload
                     </a>
-                    {% comment %} <a class="nav-link collapsed" href="{% url 'changePassword' %}"> {% endcomment %}
+                    <a class="nav-link collapsed" href="{% url 'password_change' %}">
                         Change Password
                     </a>
                 </nav>

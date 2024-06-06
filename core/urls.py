@@ -29,7 +29,7 @@ urlpatterns = [
 
     path("accounts/", include("django.contrib.auth.urls")),
     path("accounts/list/", UserListView.as_view(), name="user_list"),
-    path("accounts/delete/<pk>", UserDeleteView.as_view(), name="user_delete"),
+    path("accounts/delete/<pk>/", UserDeleteView.as_view(), name="user_delete"),
 ]
 
 urlpatterns += static(

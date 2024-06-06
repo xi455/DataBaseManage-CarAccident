@@ -13,6 +13,7 @@
         <div class="card mb-4">
             <div class="card-header">
                 <i class="fas fa-table me-1"></i>User List
+                <a class="btn btn-sm btn-success" href="{% url 'transport:create' %}" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
             </div>
             <div class="card-body">
                 {% for message in messages %}
