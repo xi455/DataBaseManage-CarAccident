@@ -24,7 +24,7 @@ class UserListView(GroupPerms, generic.ListView):
     order="-date_joined"
 
 
-class CustomUserCreateView(GroupPerms, CreateView):
+class CustomUserCreateView(CreateView):
     model = User
     form_class = CustomUserCreationForm
     template_name = "registration/user_form.html"
@@ -42,6 +42,15 @@ class CustomPasswordChangeView(PasswordChangeView):
     def form_valid(self, form):
         messages.success(self.request, "密碼已經成功變更！")
         return super().form_valid(form)
+    
+
+class ProfileTemplateView(LoginRequiredMixin, TemplateView):
+    template_name = "registration/profile.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context["user"] = self.request.user
+        return context
 
 
 class UserDeleteView(GroupPerms, generic.DeleteView):
