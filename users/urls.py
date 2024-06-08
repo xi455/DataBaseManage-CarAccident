@@ -1,10 +1,11 @@
 from django.urls import path, include
 
-from users.views import UserListView, CustomUserCreateView, CustomPasswordChangeView, UserDeleteView
+from users.views import UserListView, CustomUserCreateView, CustomPasswordChangeView, ProfileTemplateView, UserDeleteView
 
 urlpatterns = [
     path("register/", CustomUserCreateView.as_view(), name="user_register"),
-    path("password_changes123/", CustomPasswordChangeView.as_view(), name="custom_password_change"),
+    path("profile/", ProfileTemplateView.as_view(), name="user_profile"),
+    path("password_change/", CustomPasswordChangeView.as_view(), name="custom_password_change"),
     
     path("list/", UserListView.as_view(), name="user_list"),
     

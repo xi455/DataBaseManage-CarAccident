@@ -1,0 +1,162 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+{% endblock stylesheet %}
+
+{% block body %}
+<div class="container bootdey">
+    <section class="col-md-12">
+        <div class="row">
+            <div class="col-sm-12 col-md-4">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <div class="card-header-menu">
+                            <i class="fa fa-bars"></i>
+                        </div>
+                        <div class="card-header-headshot"></div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-content-member">
+                            <h4 class="m-t-0">{{ user }}</h4>
+                            <p class="m-0"><i class="pe-7s-map-marker"></i>Taiwan</p>
+                        </div>
+                        <div class="card-content-languages">
+                            <div class="card-content-languages-group">
+                                <div>
+                                    <h4>語言:</h4>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li>繁體中文
+                                            <div class="fluency fluency-4"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content-languages-group">
+                                <div>
+                                    <h4>Gmail:</h4>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li>{% if user.gmail %}{{ user.gmail }}{% else %}無{% endif %}
+                                            <div class="fluency fluency-4"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="card-content-summary">
+                            <p>我是 {{ user }}，28歲，來自台中。目前在一家物流公司工作，平時經常需要開車出差。由於工作的關係，我對交通安全非常關注，也希望自己能夠在路上行駛得更加安全。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-8">
+                <div class="review-block h-100">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="review-block-img">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4M6o6AiUr382OnaMjtRRfUbwj7SgMZ_po7w&s" class="img-rounded" alt="">
+                            </div>
+                            <div class="review-block-name"><a href="#">nktailor</a></div>
+                            <div class="review-block-date">January 29, 2016<br>1 day ago</div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="review-block-rate">
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="review-block-title">this was nice in buy</div>
+                            <div class="review-block-description">Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type. </div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="review-block-img">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4M6o6AiUr382OnaMjtRRfUbwj7SgMZ_po7w&s" class="img-rounded" alt="">
+                            </div>
+                            <div class="review-block-name"><a href="#">nktailor</a></div>
+                            <div class="review-block-date">January 29, 2016<br>1 day ago</div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="review-block-rate">
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="review-block-title">this was nice in buy</div>
+                            <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                        </div>
+                    </div>
+                    <hr>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <div class="review-block-img">
+                                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4M6o6AiUr382OnaMjtRRfUbwj7SgMZ_po7w&s" class="img-rounded" alt="">
+                            </div>
+                            <div class="review-block-name"><a href="#">nktailor</a></div>
+                            <div class="review-block-date">January 29, 2016<br>1 day ago</div>
+                        </div>
+                        <div class="col-sm-9">
+                            <div class="review-block-rate">
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-success btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                                <button type="button" class="btn btn-default btn-xs" aria-label="Left Align">
+                                    <span class="glyphicon glyphicon-star" aria-hidden="true"></span>
+                                </button>
+                            </div>
+                            <div class="review-block-title">this was nice in buy</div>
+                            <div class="review-block-description">this was nice in buy. this was nice in buy. this was nice in buy. this was nice in buy this was nice in buy this was nice in buy this was nice in buy this was nice in buy</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div> 
+    </section>
+</div> 
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}
