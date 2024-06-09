@@ -44,3 +44,8 @@ class ErrorReport(models.Model):
     class Meta:
         verbose_name = "錯誤回報"
         verbose_name_plural = "錯誤回報"
+
+        permissions = [
+            ("check_repair", "Can selected repair the status of report"),
+            ("check_overrule", "Can selected overrule the status of report"),
+        ]
