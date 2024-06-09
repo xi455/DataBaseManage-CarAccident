@@ -1,0 +1,57 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
+    <link rel="stylesheet" type="text/css" href="{% static 'css/report_detail.css' %}">
+{% endblock %}
+
+{% block body %}
+<div class="container">
+    <div class="row">
+        <div class="col-md-5">
+            <div class="project-info-box mt-0">
+                <h5>回報詳情</h5>
+                <p class="mb-0">錯誤描述: {{ report.錯誤描述 }}</p>
+                <p class="mb-0">具體位置描述: {{ report.具體位置描述 }}</p>
+                <p class="mb-0">其他說明: {{ report.其他說明 }}</p>
+            </div><!-- / project-info-box -->
+
+            <div class="project-info-box">
+                <p><b class="me-3">用戶名稱:</b> {{ report.用戶 }}</p>
+                <p><b class="me-3">錯誤型態:</b> {{ report.錯誤型態 }}</p>
+                <p><b class="me-3">查詢內容:</b> {{ report.查詢內容 }}</p>
+                <p><b class="me-3">錯誤頁面:</b> {{ report.錯誤頁面 }}</p>
+                <p><b class="me-3">回報日期:</b> {{ report.回報日期 }}</p>
+                <p><b class="me-3">處理狀態:</b> {% if report.處理狀態 == "已處理" %}<span class="badge bg-success">Success</span>{% elif report.處理狀態 == "未處理" %}<span class="badge bg-warning">Wait...</span>{% else %}<span class="badge bg-danger">Overrule</span>{% endif %}</p>
+            </div><!-- / project-info-box -->
+        </div><!-- / column -->
+
+        <div class="col-md-7">
+            {% if report.錯誤截圖 %}
+                <img src="{{ report.錯誤截圖.url }}" alt="project-image" class="rounded">
+            {% else %}
+                <img src="https://www.bootdey.com/image/400x300/FFB6C1/000000" alt="project-image" class="rounded">
+            {% endif %}
+
+            {% include 'elements/modal.html' %}
+            <div class="project-info-box">
+                <p><b>Operate</b></p>
+                <p>
+                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#RepairModalCenter">
+                        修復
+                      </button>
+                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#OverruleModalCenter">
+                        駁回
+                      </button>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+
+{% endblock %}
+{% block javascript %}
+{% static "js/modal.js" %}
+{% endblock %}

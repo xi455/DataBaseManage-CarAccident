@@ -19,12 +19,16 @@ from django.conf import settings
 from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import include, path
-from django.views.generic import RedirectView
+from django.views.generic import RedirectView, TemplateView
+
 
 urlpatterns = [
     path("", RedirectView.as_view(url="transport/"), name="index"),
     path("admin/", admin.site.urls),
+    path("403/", TemplateView.as_view(template_name="403_csrf.html"), name="403"),
     path("transport/", include("transport.urls", namespace="transport")),
+    path("error-report/", include("report.urls", namespace="report")),
+    path("accounts/", include("users.urls")),
 ]
 
 urlpatterns += static(

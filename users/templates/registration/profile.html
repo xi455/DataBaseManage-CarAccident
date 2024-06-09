@@ -1,0 +1,102 @@
+
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+{% endblock stylesheet %}
+
+{% block body %}
+<div class="container bootdey">
+    
+    {% for message in messages %}
+        <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+            {{ message }}
+        </div>
+    {% endfor %}
+
+    <section class="col-md-12">
+        <div class="row">
+            <div class="col-sm-12 col-md-4" style="max-height: 80vh;">
+                <div class="card h-100">
+                    <div class="card-header">
+                        <div class="card-header-menu">
+                            <i class="fa fa-bars"></i>
+                        </div>
+                        <div class="card-header-headshot"></div>
+                    </div>
+                    <div class="card-content">
+                        <div class="card-content-member">
+                            <h4 class="m-t-0">{{ user }}</h4>
+                            <p class="m-0"><i class="pe-7s-map-marker"></i>Taiwan</p>
+                        </div>
+                        <div class="card-content-languages">
+                            <div class="card-content-languages-group">
+                                <div>
+                                    <h4>語言:</h4>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li>繁體中文
+                                            <div class="fluency fluency-4"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            <div class="card-content-languages-group">
+                                <div>
+                                    <h4>Gmail:</h4>
+                                </div>
+                                <div>
+                                    <ul>
+                                        <li>{% if user.gmail %}{{ user.gmail }}{% else %}無{% endif %}
+                                            <div class="fluency fluency-4"></div>
+                                        </li>
+                                    </ul>
+                                </div>
+                            </div>
+                            
+                        </div>
+                        <div class="card-content-summary">
+                            <p>我是 {{ user }}，28歲，來自台中。目前在一家物流公司工作，平時經常需要開車出差。由於工作的關係，我對交通安全非常關注，也希望自己能夠在路上行駛得更加安全。</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-12 col-md-8" style="max-height: 80vh;">
+                <div class="review-block overflow-auto h-100">
+                    {% if reports %}
+                        {% for report in reports %}
+                        <div class="row" style="height: 8rem;">
+                            <div class="col-sm-3">
+                                <div class="review-block-img">
+                                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS4M6o6AiUr382OnaMjtRRfUbwj7SgMZ_po7w&s" class="img-rounded" alt="">
+                                </div>
+                                <div class="review-block-name">{{ user }}</div>
+                                <div class="review-block-date">{{ report.回報日期 }}<br>{{ report.回報日期|timesince }} ago</div>
+                            </div>
+                            <div class="col-sm-9">
+                                <div class="review-block-rate">                            
+                                </div>
+                                <div class="review-block-title">{% if report.處理狀態 == "已處理" %}<i class="far fa-check-circle"></i>{% elif report.處理狀態 == "未處理" %}<i class="fas fa-wrench"></i>{% else %}<i class="fas fa-times"></i>{% endif %} <a class="color-black" href="{% url "report:detail" report.id %}">{{ report }}</a></div>                            
+                                <div class="review-block-description">{{ report.錯誤描述 }}</div>
+                            </div>
+                        </div>
+                        <hr>
+                        {% endfor %}
+                    {% else %}
+                        <div class="d-flex flex-column justify-content-center align-items-center h-100">
+                            <h4 class="alert-heading">No report</h4>
+                            <p>There is no report yet.</p>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div> 
+    </section>
+</div> 
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

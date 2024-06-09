@@ -1,0 +1,61 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block body %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Error Returns</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">Error Returns</li>
+        </ol>
+        <div class="card mb-4">
+            <div class="card-header">
+                <i class="fas fa-table me-1"></i>
+                CRUD List
+                <a class="btn btn-sm btn-success" href="{% url 'report:create' %}" style="padding: 8px; float: right; background-color: green; color: white;">ADD</a>
+            </div>
+            <div class="card-body">
+                {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>用戶</th>
+                        <th>錯誤型態</th>
+                        <th>查詢內容</th>
+                        <th>錯誤頁面</th>
+                        <th>回報日期</th>
+                        <th class="text-center">處理狀態</th>
+                        <th class="text-center">Action</th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    {% for report in reports %}
+                        <tr>
+                            <td>{{ report.id }}</td>
+                            <td>{{ report.用戶 }}</td>
+                            <td>{{ report.錯誤型態 }}</td>
+                            <td>{{ report.查詢內容 }}</td>
+                            <td>{{ report.錯誤頁面 }}</td>
+                            <td>{{ report.回報日期 }}</td>
+                            <td class="text-center">{% if report.處理狀態 == "已處理" %}<i class="far fa-check-circle"></i>{% elif report.處理狀態 == "未處理" %}<i class="fas fa-wrench"></i>{% else %}<i class="fas fa-times"></i>{% endif %}</td>
+                            <td class="text-center">
+                                <a class="btn btn-sm btn-warning" href="{% url "report:detail" report.id %}"> <i class="fas fa-eye"></i> 查看</a>
+                                {% comment %} <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a> {% endcomment %}
+                            </td>
+                        </tr>
+                    {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block javascript %}
+
+{% endblock %}

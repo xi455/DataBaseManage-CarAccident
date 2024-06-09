@@ -8,6 +8,7 @@ from django.urls import reverse, reverse_lazy
 from django.views import generic
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
+from django.contrib.auth.mixins import LoginRequiredMixin
 
 from transport.models import (
         AccidentRecords,
@@ -19,7 +20,11 @@ from transport.models import (
 from transport.forms import CombinedForm
 from transport_subsidiary.models import UnitName, VehicleType
 
+from utils.perms import GroupPerms
+
 # Create your views here.
+
+
 class indexTemplateView(TemplateView):
     template_name = "index.html"
     
@@ -33,7 +38,7 @@ class indexTemplateView(TemplateView):
         return context
     
 
-class CarAccidentListView(generic.ListView):
+class CarAccidentListView(GroupPerms, generic.ListView):
     model = AccidentRecords
     template_name = "caraccident_list.html"
     context_object_name = "caraccident_list"
@@ -41,7 +46,7 @@ class CarAccidentListView(generic.ListView):
     order="-發生日期"
 
 
-class CarAccidentCreateView(generic.View):
+class CarAccidentCreateView(GroupPerms, generic.View):
     template_name = "caraccident_create.html"
 
     def get(self, request, *args, **kwargs):

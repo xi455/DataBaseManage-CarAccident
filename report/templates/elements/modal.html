@@ -1,0 +1,43 @@
+<!-- Repair Modal -->
+<div class="modal fade" id="RepairModalCenter" tabindex="-1" role="dialog" aria-labelledby="RepairModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="RepairModalLongTitle">Repair Modal</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="{% url "report:check_repair" report.id %}" method="POST">
+            {% csrf_token %}
+            <div class="modal-body">
+                  確認是否修復完成？
+              </div>
+              <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="submit" class="btn btn-primary">確認</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
+
+<!-- Overrule Modal -->
+<div class="modal fade" id="OverruleModalCenter" tabindex="-1" role="dialog" aria-labelledby="OverruleModalCenterTitle" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="OverruleModalLongTitle">Overrule Modal</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <form action="{% url "report:check_overrule" report.id %}" method="POST">
+          {% csrf_token %}  
+          <div class="modal-body">
+                確認是否駁回回報？
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="submit" class="btn btn-primary">確認</button>
+            </div>
+        </form>
+      </div>
+    </div>
+  </div>

@@ -39,6 +39,12 @@ ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
 # Application definition
 
 INSTALLED_APPS = [
+    # app
+    "users",
+    "transport",
+    "transport_subsidiary",
+    "report",
+    
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
@@ -51,9 +57,6 @@ INSTALLED_APPS = [
     "chartjs",
     "widget_tweaks",
 
-    # app
-    "transport",
-    "transport_subsidiary",
 ]
 
 MIDDLEWARE = [
@@ -118,6 +121,11 @@ AUTH_PASSWORD_VALIDATORS = [
     },
 ]
 
+AUTH_USER_MODEL = "users.User"
+
+LOGIN_URL = 'login'
+LOGIN_REDIRECT_URL = 'index'
+LOGOUT_REDIRECT_URL = 'index'
 
 # Internationalization
 # https://docs.djangoproject.com/en/5.0/topics/i18n/
