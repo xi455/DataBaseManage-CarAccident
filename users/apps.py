@@ -4,4 +4,4 @@ from django.apps import AppConfig
 class UsersConfig(AppConfig):
     default_auto_field = "django.db.models.BigAutoField"
     name = "users"
-    verbose_name = "使用者帳號123"
+    verbose_name = "使用者帳號管理"
