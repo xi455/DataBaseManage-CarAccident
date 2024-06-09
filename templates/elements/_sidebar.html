@@ -12,6 +12,10 @@
                 <div class="sb-nav-link-icon"><i class="fas fa-fw fa-database"></i></div>
                 Car Accident
             </a>
+            <a class="nav-link" href="{% url 'report:list' %}">
+                <div class="sb-nav-link-icon"><i class="fas fa-exclamation-triangle"></i></div>
+                Report
+            </a>
             {% endif %}
                 <div class="sb-sidenav-menu-heading">Interface</div>
                 {% if perms.users.add_user %}
@@ -38,6 +42,9 @@
                         </a>
                         <a class="nav-link collapsed" href="{% url 'custom_password_change' %}">
                             Change Password
+                        </a>
+                        <a class="nav-link collapsed" href="{% url 'report:create' %}">
+                            Error Returns
                         </a>
                     </nav>
                 </div>

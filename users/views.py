@@ -9,11 +9,14 @@ from django.views import generic
 from django.views.generic.base import RedirectView, TemplateView
 from django.views.generic.edit import CreateView, DeleteView, UpdateView
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
-from utils.perms import GroupPerms
+from django.contrib.auth.views import PasswordChangeView
 
 from users.models import User
-from django.contrib.auth.views import PasswordChangeView
 from users.forms import CustomUserCreationForm
+
+from report.models import ErrorReport
+
+from utils.perms import GroupPerms
 
 # Create your views here.
 class UserListView(GroupPerms, generic.ListView):
@@ -49,7 +52,7 @@ class ProfileTemplateView(LoginRequiredMixin, TemplateView):
 
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
-        context["user"] = self.request.user
+        context["reports"] = ErrorReport.objects.filter(用戶=self.request.user).order_by("-回報日期")
         return context
 
 

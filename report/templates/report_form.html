@@ -1,0 +1,116 @@
+{% extends 'base.html' %}
+
+{% load static %}
+{% load widget_tweaks %}
+
+{% block stylesheet %}
+    <style>
+        .bd-example {
+            padding: 1.5rem;
+            margin-right: 0;
+            margin-left: 0;
+            border-width: 1px;
+            border-top-left-radius: .25rem;
+            border-top-right-radius: .25rem;
+        }
+        .bd-example {
+            position: relative;
+            padding: 1rem;
+            margin: 1rem -.75rem 0;
+            border: solid #dee2e6;
+            border-width: 1px;
+        }
+    </style>
+{% endblock %}
+{% block body %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">CRUD</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item"><a href="/">Dashboard</a></li>
+            <li class="breadcrumb-item active">Error Returns</li>
+        </ol>
+
+        {{ form.non_field_errors }}
+        <form action="" novalidate
+            class="needs-validation"
+            novalidate
+            method="POST"
+            enctype="multipart/form-data">
+            {% csrf_token %}
+            
+            <h2 class="mt-4">錯誤回報</h2>
+            <div class="bd-example">
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.錯誤型態.errors }}
+                            {% render_field form.錯誤型態 %}
+                            <div class="invalid-feedback">請輸入錯誤型態</div>
+                            <label for="{{ form.錯誤型態.id_for_label }}">錯誤型態:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.錯誤描述.errors }}
+                            {% render_field form.錯誤描述 %}
+                            <div class="invalid-feedback">請輸入錯誤描述</div>
+                            <label for="{{ form.錯誤描述.id_for_label }}">錯誤描述:</label>
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.查詢內容.errors }}
+                            {% render_field form.查詢內容 %}
+                            <div class="invalid-feedback">請輸入查詢內容</div>
+                            <label for="{{ form.查詢內容.id_for_label }}">查詢內容:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.錯誤頁面.errors }}
+                            {% render_field form.錯誤頁面 %}
+                            <div class="invalid-feedback">請輸入錯誤頁面</div>
+                            <label for="{{ form.錯誤頁面.id_for_label }}">錯誤頁面:</label>
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.具體位置描述.errors }}
+                            {% render_field form.具體位置描述 %}
+                            <label for="{{ form.具體位置描述.id_for_label }}">具體位置描述:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">                            
+                            {{ form.其他說明.errors }}
+                            {% render_field form.其他說明 %}
+                            <div class="invalid-feedback">請輸入其他說明</div>
+                            <label for="{{ form.其他說明.id_for_label }}">其他說明:</label>                          
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="mb-3 mb-md-0">                            
+                            {{ form.錯誤截圖.errors }}
+                            <label for="{{ form.錯誤截圖.id_for_label }}">錯誤截圖:</label>
+                            {% render_field form.錯誤截圖 %}  
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            
+            <div class="mt-4 mb-0">
+                <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">儲存</button></div>
+            </div>
+        </form>
+    </div>
+{% endblock %}
+{% block javascript %}
+    <script src="{% static 'js/form_verify.js' %}"></script>
+{% endblock %}

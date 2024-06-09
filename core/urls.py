@@ -27,6 +27,7 @@ urlpatterns = [
     path("admin/", admin.site.urls),
     path("403/", TemplateView.as_view(template_name="403_csrf.html"), name="403"),
     path("transport/", include("transport.urls", namespace="transport")),
+    path("error-report/", include("report.urls", namespace="report")),
     path("accounts/", include("users.urls")),
 ]
 

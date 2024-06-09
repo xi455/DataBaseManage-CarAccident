@@ -43,6 +43,7 @@ INSTALLED_APPS = [
     "users",
     "transport",
     "transport_subsidiary",
+    "report",
     
     "django.contrib.admin",
     "django.contrib.auth",
