@@ -204,11 +204,168 @@
                         </div>                         
                     </div>
                 </div>
-                
+            </div>
+            <h2 class="mt-4">肇因研判</h2>
+            <div class="bd-example">
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.causeanalysis_form.肇因研判大類別名稱_主要.errors }}
+                            {% render_field form.causeanalysis_form.肇因研判大類別名稱_主要 %}
+                            <label for="{{ form.causeanalysis_form.肇因研判大類別名稱_主要.id_for_label }}">肇因研判大類別名稱_主要:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.causeanalysis_form.肇因研判子類別名稱_主要.errors }}
+                            {% render_field form.causeanalysis_form.肇因研判子類別名稱_主要 %}
+                            <label for="{{ form.causeanalysis_form.肇因研判子類別名稱_主要.id_for_label }}">肇因研判子類別名稱_主要:</label>
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.causeanalysis_form.肇因研判子類別名稱_個別.errors }}
+                            {% render_field form.causeanalysis_form.肇因研判子類別名稱_個別 %}
+                            <label for="{{ form.causeanalysis_form.肇因研判子類別名稱_個別.id_for_label }}">肇因研判子類別名稱_個別:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.causeanalysis_form.肇事逃逸類別名稱_是否肇逃.errors }}
+                            {% render_field form.causeanalysis_form.肇事逃逸類別名稱_是否肇逃 %}
+                            <label for="{{ form.causeanalysis_form.肇事逃逸類別名稱_是否肇逃.id_for_label }}">肇事逃逸類別名稱_是否肇逃:</label>
+                        </div>                         
+                    </div>
+                </div>
+            </div>
+            <h2 class="mt-4">號誌</h2>
+            <div class="bd-example">
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.trafficfacilities_form.號誌_號誌種類名稱.errors }}
+                            {% render_field form.trafficfacilities_form.號誌_號誌種類名稱 %}
+                            <label for="{{ form.trafficfacilities_form.號誌_號誌種類名稱.id_for_label }}">號誌_號誌種類名稱:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.trafficfacilities_form.號誌_號誌動作名稱.errors }}
+                            {% render_field form.trafficfacilities_form.號誌_號誌動作名稱 %}
+                            <label for="{{ form.trafficfacilities_form.號誌_號誌動作名稱.id_for_label }}">號誌_號誌動作名稱:</label>
+                        </div>                         
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="mt-4">號誌</h2>
+            <div class="bd-example">
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.trafficfacilities_form.號誌_號誌種類名稱.errors }}
+                            {% render_field form.trafficfacilities_form.號誌_號誌種類名稱 %}
+                            <label for="{{ form.trafficfacilities_form.號誌_號誌種類名稱.id_for_label }}">號誌_號誌種類名稱:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.trafficfacilities_form.號誌_號誌動作名稱.errors }}
+                            {% render_field form.trafficfacilities_form.號誌_號誌動作名稱 %}
+                            <label for="{{ form.trafficfacilities_form.號誌_號誌動作名稱.id_for_label }}">號誌_號誌動作名稱:</label>
+                        </div>                         
+                    </div>
+                </div>
+            </div>
+
+            <h2 class="mt-4">道路狀況</h2>
+            <div class="bd-example">
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.road_form.道路型態大類別名稱.errors }}
+                            {% render_field form.road_form.道路型態大類別名稱 %}
+                            <div class="invalid-feedback">請輸入道路型態大類別名稱</div>
+                            <label for="{{ form.road_form.道路型態大類別名稱.id_for_label }}">道路型態大類別名稱:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.road_form.道路型態子類別名稱.errors }}
+                            {% render_field form.road_form.道路型態子類別名稱 %}
+                            <div class="invalid-feedback">請輸入道路型態子類別名稱</div>
+                            <label for="{{ form.road_form.道路型態子類別名稱.id_for_label }}">道路型態子類別名稱:</label>
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.road_form.事故位置大類別名稱.errors }}
+                            {% render_field form.road_form.事故位置大類別名稱 %}
+                            <div class="invalid-feedback">請輸入事故位置大類別名稱</div>
+                            <label for="{{ form.road_form.事故位置大類別名稱.id_for_label }}">事故位置大類別名稱:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.road_form.路面狀況_路面鋪裝名稱.errors }}
+                            {% render_field form.road_form.路面狀況_路面鋪裝名稱 %}
+                            <div class="invalid-feedback">請輸入路面狀況_路面鋪裝名稱</div>
+                            <label for="{{ form.road_form.路面狀況_路面鋪裝名稱.id_for_label }}">路面狀況_路面鋪裝名稱:</label>
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.road_form.路面狀況_路面狀態名稱.errors }}
+                            {% render_field form.road_form.路面狀況_路面狀態名稱 %}
+                            <label for="{{ form.road_form.路面狀況_路面狀態名稱.id_for_label }}">路面狀況_路面狀態名稱:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.road_form.路面狀況_路面缺陷名稱.errors }}
+                            {% render_field form.road_form.路面狀況_路面缺陷名稱 %}
+                            <div class="invalid-feedback">請選擇路面狀況_路面缺陷名稱</div>
+                            <label for="{{ form.road_form.路面狀況_路面缺陷名稱.id_for_label }}">路面狀況_路面缺陷名稱:</label>
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.road_form.道路障礙_障礙物名稱.errors }}
+                            {% render_field form.road_form.道路障礙_障礙物名稱 %}
+                            <div class="invalid-feedback">請輸入道路障礙_障礙物名稱</div>
+                            <label for="{{ form.road_form.道路障礙_障礙物名稱.id_for_label }}">道路障礙_障礙物名稱:</label>
+                        </div>
+                    </div>
+                    <div class="col">   
+                        <div class="form-floating">
+                            {{ form.road_form.道路障礙_視距品質名稱.errors }}
+                            {% render_field form.road_form.道路障礙_視距品質名稱 %}
+                            <label for="{{ form.road_form.道路障礙_視距品質名稱.id_for_label }}">道路障礙_視距品質名稱:</label>
+                        </div>                         
+                    </div>
+                </div>
+                <div class="row mb-3">
+                    <div class="col">
+                        <div class="form-floating mb-3 mb-md-0">                            
+                            {{ form.road_form.道路障礙_視距名稱.errors }}
+                            {% render_field form.road_form.道路障礙_視距名稱 %}
+                            <label for="{{ form.road_form.道路障礙_視距名稱.id_for_label }}">道路障礙_視距名稱:</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
                 <div class="mt-4 mb-0">
                     <div class="d-grid"><button class="btn btn-primary btn-block" type="submit">儲存</button></div>
                 </div>
-            </div>
+            
         </form>
     </div>
 {% endblock %}
