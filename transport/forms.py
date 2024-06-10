@@ -59,12 +59,23 @@ class CauseAnalysisForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["accident_id"]
 
+        widgets = {
+            "肇因研判大類別名稱_主要": forms.TextInput(attrs={"class": "form-control"}),
+            "肇因研判子類別名稱_主要": forms.TextInput(attrs={"class": "form-control"}),
+            "肇因研判子類別名稱_個別": forms.TextInput(attrs={"class": "form-control"}),
+            "肇事逃逸類別名稱_是否肇逃": forms.TextInput(attrs={"class": "form-control"}),
+        }
 
 class TrafficFacilitiesForm(forms.ModelForm):
     class Meta:
         model = TrafficFacilities
         fields = "__all__"
         exclude = ["accident_id"]
+        
+        widgets = {
+            "號誌_號誌種類名稱": forms.Select(attrs={"class": "form-select"}),
+            "號誌_號誌動作名稱": forms.Select(attrs={"class": "form-select"}),
+        }
 
 
 class RoadConditionsForm(forms.ModelForm):
@@ -73,8 +84,23 @@ class RoadConditionsForm(forms.ModelForm):
         fields = "__all__"
         exclude = ["accident_id"]
 
+        widgets = {
+            "道路型態大類別名稱": forms.Select(attrs={"class": "form-select"}),
+            "道路型態子類別名稱": forms.Select(attrs={"class": "form-select"}),
+            "事故位置大類別名稱": forms.Select(attrs={"class": "form-select"}),
+            "路面狀況_路面鋪裝名稱": forms.Select(attrs={"class": "form-select"}),
+            "路面狀況_路面狀態名稱": forms.Select(attrs={"class": "form-select"}),
+            "路面狀況_路面缺陷名稱": forms.Select(attrs={"class": "form-select"}),
+            "道路障礙_障礙物名稱": forms.Select(attrs={"class": "form-select"}),
+            "道路障礙_視距品質名稱": forms.Select(attrs={"class": "form-select"}),
+            "道路障礙_視距名稱" :forms.Select(attrs={"class": "form-select"}),
+        }
+
 
 
 class CombinedForm(forms.Form):
     accident_form = AccidentRecordsForm(prefix='accident')
     party_form = PartyInfoForm(prefix='party')
+    causeanalysis_form = CauseAnalysisForm(prefix='causeanalysis')
+    trafficfacilities_form = TrafficFacilitiesForm(prefix='trafficfacilities')
+    road_form = RoadConditionsForm(prefix='road')
