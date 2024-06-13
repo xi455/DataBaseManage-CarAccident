@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     "transport",
     "transport_subsidiary",
     "report",
-    
+    "admin_interface",
+    "colorfield",
     "django.contrib.admin",
     "django.contrib.auth",
     "django.contrib.contenttypes",
