@@ -17,7 +17,8 @@ class AccidentRecords(models.Model):
     事故類別名稱 = models.CharField(
         max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
     )
-    處理單位名稱警局層 = models.ForeignKey(UnitName, on_delete=models.CASCADE)
+    
+    處理單位名稱警局層 = models.ForeignKey(UnitName, models.DO_NOTHING, db_column='處理單位名稱警局層', blank=True, null=True)
     發生地點 = models.CharField(max_length=80)
 
     class Weather(models.TextChoices):
@@ -57,16 +58,36 @@ class AccidentRecords(models.Model):
         verbose_name = "事故紀錄"
         verbose_name_plural = "事故紀錄"
         db_table_comment = "事故紀錄表"
+        managed = True
+        db_table = 'accident_records'
 
     def __str__(self):
         return self.發生地點
 
 
+class CauseAnalysis(models.Model):
+    id = models.IntegerField(primary_key=True)
+    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    肇因研判大類別名稱_主要 = models.CharField(max_length=15)
+    肇因研判子類別名稱_主要 = models.CharField(max_length=25)
+    肇因研判子類別名稱_個別 = models.CharField(max_length=25)
+    肇事逃逸類別名稱_是否肇逃 = models.CharField(max_length=2)
+
+    class Meta:
+        verbose_name = "原因分析"
+        verbose_name_plural = "原因分析"
+        db_table_comment = "原因分析表"
+        managed = True
+        db_table = 'cause_analysis'
+
+    def __str__(self):
+        return self.肇因研判大類別名稱_主要
+
+
 class PartyInfo(models.Model):
-    accident_id = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE)
-    當事者區分_類別_大類別名稱_車種 = models.ForeignKey(
-        VehicleType, on_delete=models.CASCADE, null=True, blank=True
-    )
+    id = models.IntegerField(primary_key=True)
+    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    當事者區分_類別_大類別名稱_車種 = models.ForeignKey(VehicleType, models.DO_NOTHING, db_column='當事者區分_類別_大類別名稱_車種', blank=True, null=True)
 
     class Gender(models.TextChoices):
         FIRST_GENDER = "男", "男"
@@ -180,65 +201,16 @@ class PartyInfo(models.Model):
         verbose_name = "肇事人紀錄"
         verbose_name_plural = "肇事人紀錄"
         db_table_comment = "肇事人紀錄表"
+        managed = True
+        db_table = 'party_info'
 
     def __str__(self):
         return self.保護裝備名稱
 
 
-class CauseAnalysis(models.Model):
-    accident_id = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE)
-    肇因研判大類別名稱_主要 = models.CharField(max_length=15)
-    肇因研判子類別名稱_主要 = models.CharField(max_length=25)
-    肇因研判子類別名稱_個別 = models.CharField(max_length=25)
-    肇事逃逸類別名稱_是否肇逃 = models.CharField(max_length=2)
-
-    class Meta:
-        verbose_name = "原因分析"
-        verbose_name_plural = "原因分析"
-        db_table_comment = "原因分析表"
-
-    def __str__(self):
-        return self.肇因研判大類別名稱_主要
-
-
-class TrafficFacilities(models.Model):
-    accident_id = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE)
-
-    class LogType(models.TextChoices):
-        FIRST_LOGTYPE = "行車管制號誌", "行車管制號誌"
-        SECOND_LOGTYPE = "無號誌", "無號誌"
-        THIRD_LOGTYPE = "閃光號誌", "閃光號誌"
-        FOURTH_LOGTYPE = (
-            "行車管制號誌(附設行人專用號誌)",
-            "行車管制號誌(附設行人專用號誌)",
-        )
-
-    號誌_號誌種類名稱 = models.CharField(
-        max_length=20, choices=LogType.choices, default=LogType.FIRST_LOGTYPE
-    )
-
-    class LogAction(models.TextChoices):
-        FIRST_LOGACTION = "無號誌", "無號誌"
-        SECOND_LOGACTION = "無動作", "無動作"
-        THIRD_LOGACTION = "正常", "正常"
-        FOURTH_LOGACTION = "不正常", "不正常"
-
-    號誌_號誌動作名稱 = models.CharField(
-        max_length=3, choices=LogAction.choices, default=LogAction.FIRST_LOGACTION
-    )
-
-    class Meta:
-        verbose_name = "交通設施"
-        verbose_name_plural = "交通設施"
-        db_table_comment = "交通設施表"
-
-    def __str__(self):
-        return self.號誌_號誌種類名稱
-
-
 class RoadConditions(models.Model):
-    accident_id = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE)
-
+    id = models.IntegerField(primary_key=True)
+    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
     class BigRoadType(models.TextChoices):
         FIRST_BIGROADTYPE = "平交道", "平交道"
         SECOND_BIGROADTYPE = "單路部分", "單路部分"
@@ -367,6 +339,45 @@ class RoadConditions(models.Model):
         verbose_name = "道路狀況"
         verbose_name_plural = "道路狀況"
         db_table_comment = "道路狀況表"
+        managed = True
+        db_table = 'road_conditions'
 
     def __str__(self):
         return self.道路型態大類別名稱
+
+
+class TrafficFacilities(models.Model):
+    id = models.IntegerField(primary_key=True)
+    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    class LogType(models.TextChoices):
+        FIRST_LOGTYPE = "行車管制號誌", "行車管制號誌"
+        SECOND_LOGTYPE = "無號誌", "無號誌"
+        THIRD_LOGTYPE = "閃光號誌", "閃光號誌"
+        FOURTH_LOGTYPE = (
+            "行車管制號誌(附設行人專用號誌)",
+            "行車管制號誌(附設行人專用號誌)",
+        )
+
+    號誌_號誌種類名稱 = models.CharField(
+        max_length=20, choices=LogType.choices, default=LogType.FIRST_LOGTYPE
+    )
+
+    class LogAction(models.TextChoices):
+        FIRST_LOGACTION = "無號誌", "無號誌"
+        SECOND_LOGACTION = "無動作", "無動作"
+        THIRD_LOGACTION = "正常", "正常"
+        FOURTH_LOGACTION = "不正常", "不正常"
+
+    號誌_號誌動作名稱 = models.CharField(
+        max_length=3, choices=LogAction.choices, default=LogAction.FIRST_LOGACTION
+    )
+
+    class Meta:
+        verbose_name = "交通設施"
+        verbose_name_plural = "交通設施"
+        db_table_comment = "交通設施表"
+        managed = True
+        db_table = 'traffic_facilities'
+
+    def __str__(self):
+        return self.號誌_號誌種類名稱

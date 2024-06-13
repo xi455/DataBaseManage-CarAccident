@@ -34,19 +34,21 @@
             {% else %}
                 <img src="https://www.bootdey.com/image/400x300/FFB6C1/000000" alt="project-image" class="rounded">
             {% endif %}
-
+            
+            {% if perms.report.check_overrule and perms.report.check_repair %}
             {% include 'elements/modal.html' %}
-            <div class="project-info-box">
-                <p><b>Operate</b></p>
-                <p>
-                    <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#RepairModalCenter">
-                        修復
-                      </button>
-                    <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#OverruleModalCenter">
-                        駁回
-                      </button>
-                </p>
-            </div>
+                <div class="project-info-box">
+                    <p><b>Operate</b></p>
+                    <p>
+                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#RepairModalCenter">
+                            修復
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary" data-bs-toggle="modal" data-bs-target="#OverruleModalCenter">
+                            駁回
+                        </button>
+                    </p>
+                </div>
+            {% endif %}
         </div>
     </div>
 </div>
