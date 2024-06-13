@@ -71,8 +71,23 @@ class CarAccidentCreateView(GroupPerms, generic.View):
             party["accident_id"] = accident
             party = PartyInfo(**party)
 
+            causeanalysis = {k[len("causeanalysis-"):]: v for k, v in form.data.items() if k.startswith('causeanalysis-')}
+            causeanalysis["accident_id"] = accident
+            causeanalysis = CauseAnalysis(**causeanalysis)
+
+            trafficfacilities = {k[len("trafficfacilities-"):]: v for k, v in form.data.items() if k.startswith('trafficfacilities-')}
+            trafficfacilities["accident_id"] = accident
+            trafficfacilities = TrafficFacilities(**trafficfacilities)
+
+            road = {k[len("road-"):]: v for k, v in form.data.items() if k.startswith('road-')}
+            road["accident_id"] = accident
+            road = RoadConditions(**road)
+
             accident.save()
             party.save()
+            causeanalysis.save()
+            trafficfacilities.save()
+            road.save()
 
             messages.success(request, "Car accident record created successfully.")
             return redirect('transport:list')
