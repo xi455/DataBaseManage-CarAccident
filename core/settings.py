@@ -44,6 +44,8 @@ INSTALLED_APPS = [
     "transport",
     "transport_subsidiary",
     "report",
+    "chart",
+    
     "admin_interface",
     "colorfield",
     "django.contrib.admin",
@@ -53,7 +55,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "django_extensions",
-
+    'rest_framework',
     # 3rd party apps
     "chartjs",
     "widget_tweaks",
