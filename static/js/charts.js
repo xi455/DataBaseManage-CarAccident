@@ -339,22 +339,22 @@ let data7 = [];
         data: {
             labels: Object.keys(data7[0].data).slice(0, 5),
             datasets: [{
-                axis: 'y',
+
                 label: '車禍事件數量',
                 data: Object.values(data7[0].data).slice(0, 5),
-                backgroundColor: colors.slice(0, Object.values(data7[0].data).length).slice(0, 5),
-                borderColor: borderColorVariants.slice(0, Object.values(data7[0].data).length).slice(0, 5),
+                backgroundColor: colors.slice(0, Object.values(data7[0].data).length),
+                borderColor: borderColorVariants.slice(0, Object.values(data7[0].data).length),
                 borderWidth: 1
             }]
         },
         options: {
-            indexAxis: 'y', 
-            responsive: true,
-            scales: {
-                x: {
-                    beginAtZero: true
+            title: {
+                    display: true,
+                    text: ' 車禍事件發生肇因'
+                },
+                legend: {
+                    position: 'left'
                 }
-            }
         }
     });
 
@@ -399,8 +399,7 @@ let data7 = [];
             value: parseInt(parts[1])
         };
     });
-    
-    // 合并A1和A2的数据
+
     const combinedData = a1Data.map((item, index) => {
         return {
             label: item.label,
@@ -408,53 +407,53 @@ let data7 = [];
             a2Value: a2Data[index].value
         };
     });
-    
 
-
+    console.log(a1Data)
+    console.log(a2Data)
     // 创建第一个饼图 (A1)
-var ctx8 = document.getElementById('myChart8').getContext('2d');
-var myChart8 = new Chart(ctx8, {
-    type: 'doughnut',
-    data: {
-        labels: a1Data.map(item => item.label),
-        datasets: [{
-            data: a1Data.map(item => item.value),
-            backgroundColor: colors,
-            borderColor: borderColorVariants,
-        }]
-    },
-    options: {
-        title: {
-            display: true,
-            text: '造成死亡車禍事件的保護裝置統計'
+    var ctx8 = document.getElementById('myChart8').getContext('2d');
+    var myChart8 = new Chart(ctx8, {
+        type: 'doughnut',
+        data: {
+            labels: a1Data.map(item => item.label),
+            datasets: [{
+                data: a1Data.map(item => item.value),
+                backgroundColor: colors,
+                borderColor: borderColorVariants,
+                borderWidth: 1
+            }]
         },
-        legend: {
-            position: 'left'
+        options: {
+            title: {
+                display: true,
+                text: '造成死亡車禍事件的保護裝置統計'
+            },
+            legend: {
+                position: 'left'
+            }
         }
-    }
-});
+    });
 
-// 创建第二个饼图 (A2)
-var ctx9 = document.getElementById('myChart9').getContext('2d');
-var myChart9 = new Chart(ctx9, {
-    type: 'doughnut',
-    data: {
-        labels: a2Data.map(item => item.label),
-        datasets: [{
-            data: a2Data.map(item => item.value),
-            backgroundColor: colors,
-            borderColor: borderColorVariants,
-        }]
-    },
-    options: {
-        title: {
-            display: true,
-            text: '沒有造成死亡車禍事件的保護裝置統計'
+    var ctx9 = document.getElementById('myChart9').getContext('2d');
+    var myChart9 = new Chart(ctx9, {
+        type: 'doughnut',
+        data: {
+            labels: a2Data.map(item => item.label),
+            datasets: [{
+                data: a2Data.map(item => item.value),
+                backgroundColor: colors,
+                borderColor: borderColorVariants,
+            }]
         },
-        legend: {
-            position: 'left'
+        options: {
+            title: {
+                display: true,
+                text: '沒有造成死亡車禍事件的保護裝置統計'
+            },
+            legend: {
+                position: 'left'
+            }
         }
-    }
-});
+    });
 }
 // var ctx = document.getElementById("myChart");
