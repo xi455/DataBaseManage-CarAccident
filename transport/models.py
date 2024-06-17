@@ -4,11 +4,11 @@ from transport_subsidiary.models import UnitName, VehicleType
 
 
 class AccidentRecords(models.Model):
-    發生年度 = models.CharField(max_length=4)
-    發生月份 = models.CharField(max_length=2)
-    發生日期 = models.CharField(max_length=8)
-    發生時間 = models.CharField(max_length=6)
-    
+    id = models.AutoField(primary_key=True)
+    發生年度 = models.CharField(max_length=4, blank=True, null=True)
+    發生月份 = models.CharField(max_length=2, blank=True, null=True)
+    發生日期 = models.CharField(max_length=8, blank=True, null=True)
+    發生時間 = models.CharField(max_length=6, blank=True, null=True)
     class AccidentType(models.TextChoices):
         FIRST_ACCIDENTTYPE = "A1", "A1"
         SECOND_ACCIDENTTYPE = "A2", "A2"
@@ -17,42 +17,18 @@ class AccidentRecords(models.Model):
     事故類別名稱 = models.CharField(
         max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
     )
-    
     處理單位名稱警局層 = models.ForeignKey(UnitName, models.DO_NOTHING, db_column='處理單位名稱警局層', blank=True, null=True)
-    發生地點 = models.CharField(max_length=80)
+    發生地點 = models.CharField(max_length=80, blank=True, null=True)
+    class AccidentType(models.TextChoices):
+        FIRST_ACCIDENTTYPE = "A1", "A1"
+        SECOND_ACCIDENTTYPE = "A2", "A2"
 
-    class Weather(models.TextChoices):
-        FIRST_WEATHER = "晴", "晴"
-        SECOND_WEATHER = "雪", "雪"
-        THIRD_WEATHER = "風沙", "風沙"
-        FOURTH_WEATHER = "暴雨", "暴雨"
-        FIFTH_WEATHER = "強風", "強風"
-        SIXTH_WEATHER = "雨", "雨"
-        SEVENTH_WEATHER = "陰", "陰"
-        EIGHTH_WEATHER = "霧或煙", "霧或煙"
 
-    天候名稱 = models.CharField(
-        max_length=3, choices=Weather.choices, default=Weather.FIRST_WEATHER
+    事故類別名稱 = models.CharField(
+        max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
     )
-
-    class Light(models.TextChoices):
-        FIRST_LIGHT = (
-            "夜間(或隧道、地下道、涵洞)有照明",
-            "夜間(或隧道、地下道、涵洞)有照明",
-        )
-        SECOND_LIGHT = (
-            "夜間(或隧道、地下道、涵洞)無照明",
-            "夜間(或隧道、地下道、涵洞)無照明",
-        )
-        THIRD_LIGHT = "有照明未開啟或故障", "有照明未開啟或故障"
-        FOURTH_LIGHT = "晨或暮光", "晨或暮光"
-        FIFTH_LIGHT = "日間自然光線", "日間自然光線"
-
-    光線名稱 = models.CharField(
-        max_length=20, choices=Light.choices, default=Light.FIRST_LIGHT
-    )
-    經度 = models.DecimalField(max_digits=9, decimal_places=6)
-    緯度 = models.DecimalField(max_digits=9, decimal_places=6)
+    經度 = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+    緯度 = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
 
     class Meta:
         verbose_name = "事故紀錄"
@@ -66,12 +42,12 @@ class AccidentRecords(models.Model):
 
 
 class CauseAnalysis(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
-    肇因研判大類別名稱_主要 = models.CharField(max_length=15)
-    肇因研判子類別名稱_主要 = models.CharField(max_length=25)
-    肇因研判子類別名稱_個別 = models.CharField(max_length=25)
-    肇事逃逸類別名稱_是否肇逃 = models.CharField(max_length=2)
+    肇因研判大類別名稱_主要 = models.CharField(max_length=15, blank=True, null=True)
+    肇因研判子類別名稱_主要 = models.CharField(max_length=25, blank=True, null=True)
+    肇因研判子類別名稱_個別 = models.CharField(max_length=25, blank=True, null=True)
+    肇事逃逸類別名稱_是否肇逃 = models.CharField(max_length=2, blank=True, null=True)
 
     class Meta:
         verbose_name = "原因分析"
@@ -85,10 +61,9 @@ class CauseAnalysis(models.Model):
 
 
 class PartyInfo(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
     當事者區分_類別_大類別名稱_車種 = models.ForeignKey(VehicleType, models.DO_NOTHING, db_column='當事者區分_類別_大類別名稱_車種', blank=True, null=True)
-
     class Gender(models.TextChoices):
         FIRST_GENDER = "男", "男"
         SECOND_GENDER = "女", "女"
@@ -98,8 +73,7 @@ class PartyInfo(models.Model):
     當事者性別名稱 = models.CharField(
         max_length=15, choices=Gender.choices, default=Gender.FIRST_GENDER
     )
-    當事者事故發生時年齡 = models.IntegerField()
-
+    當事者事故發生時年齡 = models.IntegerField(blank=True, null=True)
     class ProtectiveEquipment(models.TextChoices):
         FIRST_PROTECTIVEQUIPMENT = "無", "無"
         SECOND_PROTECTIVEQUIPMENT = (
@@ -209,7 +183,7 @@ class PartyInfo(models.Model):
 
 
 class RoadConditions(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
     class BigRoadType(models.TextChoices):
         FIRST_BIGROADTYPE = "平交道", "平交道"
@@ -347,7 +321,7 @@ class RoadConditions(models.Model):
 
 
 class TrafficFacilities(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
     class LogType(models.TextChoices):
         FIRST_LOGTYPE = "行車管制號誌", "行車管制號誌"
