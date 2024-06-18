@@ -60,10 +60,10 @@ class CauseAnalysisForm(forms.ModelForm):
         exclude = ["accident_id"]
 
         widgets = {
-            "肇因研判大類別名稱_主要": forms.TextInput(attrs={"class": "form-control"}),
+            "肇因研判大類別名稱_主要": forms.Select(attrs={"class": "form-select"}),
             "肇因研判子類別名稱_主要": forms.TextInput(attrs={"class": "form-control"}),
             "肇因研判子類別名稱_個別": forms.TextInput(attrs={"class": "form-control"}),
-            "肇事逃逸類別名稱_是否肇逃": forms.TextInput(attrs={"class": "form-control"}),
+            "肇事逃逸類別名稱_是否肇逃": forms.NullBooleanSelect(attrs={"class": "form-select"}),
         }
 
 class TrafficFacilitiesForm(forms.ModelForm):

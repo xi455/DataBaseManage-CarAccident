@@ -44,10 +44,33 @@ class AccidentRecords(models.Model):
 class CauseAnalysis(models.Model):
     id = models.AutoField(primary_key=True)
     accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
-    肇因研判大類別名稱_主要 = models.CharField(max_length=15, blank=True, null=True)
+
+    class BigCategoryNameJudgmentMain(models.TextChoices):
+        FIRST_BIGCATEGORYNAMEJUDGMENTMAIN = "無(非車輛駕駛人因素)", "無(非車輛駕駛人因素)"
+        SECOND_BIGCATEGORYNAMEJUDGMENTMAIN = "無(車輛駕駛人因素)", "無(車輛駕駛人因素)"
+        THIRD_BIGCATEGORYNAMEJUDGMENTMAIN = "機件", "機件"
+        FOURTH_BIGCATEGORYNAMEJUDGMENTMAIN = "裝載", "裝載"
+        FIFTH_BIGCATEGORYNAMEJUDGMENTMAIN = "交通管制(設施)", "交通管制(設施)"
+        SIXTH_BIGCATEGORYNAMEJUDGMENTMAIN = "燈光", "燈光"
+        SEVENTH_BIGCATEGORYNAMEJUDGMENTMAIN = "駕駛人", "駕駛人"
+        EIGHTH_BIGCATEGORYNAMEJUDGMENTMAIN = "行人(或乘客)", "行人(或乘客)"
+        NINETH_BIGCATEGORYNAMEJUDGMENTMAIN = "其他", "其他"
+
+    肇因研判大類別名稱_主要 = models.CharField(
+        max_length=15, choices=BigCategoryNameJudgmentMain.choices, default=BigCategoryNameJudgmentMain.FIRST_BIGCATEGORYNAMEJUDGMENTMAIN
+    )
     肇因研判子類別名稱_主要 = models.CharField(max_length=25, blank=True, null=True)
     肇因研判子類別名稱_個別 = models.CharField(max_length=25, blank=True, null=True)
-    肇事逃逸類別名稱_是否肇逃 = models.CharField(max_length=2, blank=True, null=True)
+    # class WhetherToEscape(models.TextChoices):
+    #     FIRST_WHETHERTOESCAPE = "A1", "A1"
+    #     SECOND_WHETHERTOESCAPE = "A2", "A2"
+
+
+    # 肇事逃逸類別名稱_是否肇逃 = models.CharField(
+    #     max_length=2, choices=WhetherToEscape.choices, default=WhetherToEscape.FIRST_WHETHERTOESCAPE
+    # )
+
+    肇事逃逸類別名稱_是否肇逃 = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "原因分析"
