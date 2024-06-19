@@ -65,25 +65,35 @@ class CarAccidentCreateView(GroupPerms, generic.View):
             accident = {k[len("accident-"):]: v for k, v in form.data.items() if k.startswith('accident-')}
             accident["處理單位名稱警局層"] = get_object_or_404(UnitName, pk=accident["處理單位名稱警局層"])
             accident = AccidentRecords(**accident)
+            accident.save()
 
             party = {k[len("party-"):]: v for k, v in form.data.items() if k.startswith('party-')}
             party["當事者區分_類別_大類別名稱_車種"] = get_object_or_404(VehicleType, pk=party["當事者區分_類別_大類別名稱_車種"])
-            party["accident_id"] = accident
+            party["accident"] = accident
             party = PartyInfo(**party)
 
             causeanalysis = {k[len("causeanalysis-"):]: v for k, v in form.data.items() if k.startswith('causeanalysis-')}
-            causeanalysis["accident_id"] = accident
+            causeanalysis["accident"] = accident
+
+            if causeanalysis["肇事逃逸類別名稱_是否肇逃"] == "unknown":
+                causeanalysis["肇事逃逸類別名稱_是否肇逃"] = None
+            
+            elif causeanalysis["肇事逃逸類別名稱_是否肇逃"] == "true":
+                causeanalysis["肇事逃逸類別名稱_是否肇逃"] = True
+
+            else:
+                causeanalysis["肇事逃逸類別名稱_是否肇逃"] = False
+
             causeanalysis = CauseAnalysis(**causeanalysis)
 
             trafficfacilities = {k[len("trafficfacilities-"):]: v for k, v in form.data.items() if k.startswith('trafficfacilities-')}
-            trafficfacilities["accident_id"] = accident
+            trafficfacilities["accident"] = accident
             trafficfacilities = TrafficFacilities(**trafficfacilities)
 
             road = {k[len("road-"):]: v for k, v in form.data.items() if k.startswith('road-')}
-            road["accident_id"] = accident
+            road["accident"] = accident
             road = RoadConditions(**road)
 
-            accident.save()
             party.save()
             causeanalysis.save()
             trafficfacilities.save()

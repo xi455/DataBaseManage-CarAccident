@@ -5,10 +5,10 @@ from transport_subsidiary.models import UnitName, VehicleType
 
 class AccidentRecords(models.Model):
     id = models.AutoField(primary_key=True)
-    發生年度 = models.CharField(max_length=4, blank=True, null=True)
-    發生月份 = models.CharField(max_length=2, blank=True, null=True)
-    發生日期 = models.CharField(max_length=8, blank=True, null=True)
-    發生時間 = models.CharField(max_length=6, blank=True, null=True)
+    發生年度 = models.CharField(max_length=4, null=True)
+    發生月份 = models.CharField(max_length=2, null=True)
+    發生日期 = models.CharField(max_length=8, null=True)
+    發生時間 = models.CharField(max_length=6, null=True)
     class AccidentType(models.TextChoices):
         FIRST_ACCIDENTTYPE = "A1", "A1"
         SECOND_ACCIDENTTYPE = "A2", "A2"
@@ -17,8 +17,8 @@ class AccidentRecords(models.Model):
     事故類別名稱 = models.CharField(
         max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
     )
-    處理單位名稱警局層 = models.ForeignKey(UnitName, models.DO_NOTHING, db_column='處理單位名稱警局層', blank=True, null=True)
-    發生地點 = models.CharField(max_length=80, blank=True, null=True)
+    處理單位名稱警局層 = models.ForeignKey(UnitName, models.DO_NOTHING, db_column='處理單位名稱警局層', null=True)
+    發生地點 = models.CharField(max_length=80, null=True)
     class AccidentType(models.TextChoices):
         FIRST_ACCIDENTTYPE = "A1", "A1"
         SECOND_ACCIDENTTYPE = "A2", "A2"
@@ -27,8 +27,8 @@ class AccidentRecords(models.Model):
     事故類別名稱 = models.CharField(
         max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
     )
-    經度 = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
-    緯度 = models.DecimalField(max_digits=9, decimal_places=6, blank=True, null=True)
+    經度 = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    緯度 = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
     class Meta:
         verbose_name = "事故紀錄"
@@ -59,8 +59,8 @@ class CauseAnalysis(models.Model):
     肇因研判大類別名稱_主要 = models.CharField(
         max_length=15, choices=BigCategoryNameJudgmentMain.choices, default=BigCategoryNameJudgmentMain.FIRST_BIGCATEGORYNAMEJUDGMENTMAIN
     )
-    肇因研判子類別名稱_主要 = models.CharField(max_length=25, blank=True, null=True)
-    肇因研判子類別名稱_個別 = models.CharField(max_length=25, blank=True, null=True)
+    肇因研判子類別名稱_主要 = models.CharField(max_length=25, null=True)
+    肇因研判子類別名稱_個別 = models.CharField(max_length=25, null=True)
     # class WhetherToEscape(models.TextChoices):
     #     FIRST_WHETHERTOESCAPE = "A1", "A1"
     #     SECOND_WHETHERTOESCAPE = "A2", "A2"
@@ -86,7 +86,7 @@ class CauseAnalysis(models.Model):
 class PartyInfo(models.Model):
     id = models.AutoField(primary_key=True)
     accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
-    當事者區分_類別_大類別名稱_車種 = models.ForeignKey(VehicleType, models.DO_NOTHING, db_column='當事者區分_類別_大類別名稱_車種', blank=True, null=True)
+    當事者區分_類別_大類別名稱_車種 = models.ForeignKey(VehicleType, models.DO_NOTHING, db_column='當事者區分_類別_大類別名稱_車種', null=True)
     class Gender(models.TextChoices):
         FIRST_GENDER = "男", "男"
         SECOND_GENDER = "女", "女"
@@ -96,7 +96,7 @@ class PartyInfo(models.Model):
     當事者性別名稱 = models.CharField(
         max_length=15, choices=Gender.choices, default=Gender.FIRST_GENDER
     )
-    當事者事故發生時年齡 = models.IntegerField(blank=True, null=True)
+    當事者事故發生時年齡 = models.IntegerField(null=True)
     class ProtectiveEquipment(models.TextChoices):
         FIRST_PROTECTIVEQUIPMENT = "無", "無"
         SECOND_PROTECTIVEQUIPMENT = (
