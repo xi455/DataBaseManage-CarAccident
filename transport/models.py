@@ -1,7 +1,8 @@
 from django.db import models
 
 from transport_subsidiary.models import UnitName, VehicleType
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class AccidentRecords(models.Model):
     id = models.AutoField(primary_key=True)
@@ -14,15 +15,40 @@ class AccidentRecords(models.Model):
         SECOND_ACCIDENTTYPE = "A2", "A2"
 
 
-    事故類別名稱 = models.CharField(
-        max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
-    )
+    # 事故類別名稱 = models.CharField(
+    #     max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
+    # )
     處理單位名稱警局層 = models.ForeignKey(UnitName, models.DO_NOTHING, db_column='處理單位名稱警局層', null=True)
     發生地點 = models.CharField(max_length=80, null=True)
     class AccidentType(models.TextChoices):
         FIRST_ACCIDENTTYPE = "A1", "A1"
         SECOND_ACCIDENTTYPE = "A2", "A2"
 
+    class WeatherType(models.TextChoices):
+        FIRST_WEATHERTYPE = "晴", "晴"
+        SECOND_WEATHERTYPE = "雪", "雪"
+        THIRD_WEATHERTYPE = "風沙", "風沙"
+        FOURTH_WEATHERTYPE = "暴雨", "暴雨"
+        FIFTH_WEATHERTYPE = "強風", "強風"
+        SIXTH_WEATHERTYPE = "雨", "雨"
+        SEVENTH_WEATHERTYPE = "陰", "陰"
+        EIGHTH_WEATHERTYPE = "霧或煙", "霧或煙"
+
+    天候名稱 = models.CharField(
+        max_length=10, choices=WeatherType.choices, default=WeatherType.FIRST_WEATHERTYPE
+    )
+    class LightType(models.TextChoices):
+        FIRST_LIGHTTYPE = "夜間(或隧道、地下道、涵洞)有照明", "夜間(或隧道、地下道、涵洞)有照明"
+        SECOND_LIGHTTYPE = "夜間(或隧道、地下道、涵洞)無照明", "夜間(或隧道、地下道、涵洞)無照明"
+        THIRD_LIGHTTYPE = "有照明未開啟或故障", "有照明未開啟或故障"
+        FORTH_LIGHTTYPE = "晨或暮光", "晨或暮光"
+        FIFTH_LIGHTTYPE = "日間自然光線", "日間自然光線"
+
+    光線名稱 = models.CharField(
+        max_length=20, 
+         choices=LightType.choices,
+         default=LightType.FIRST_LIGHTTYPE
+    )
 
     事故類別名稱 = models.CharField(
         max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
@@ -38,7 +64,7 @@ class AccidentRecords(models.Model):
         db_table = 'accident_records'
 
     def __str__(self):
-        return self.發生地點
+        return str(int(self.pk))
 
 
 class CauseAnalysis(models.Model):
@@ -378,3 +404,10 @@ class TrafficFacilities(models.Model):
 
     def __str__(self):
         return self.號誌_號誌種類名稱
+    
+@receiver(post_delete, sender=AccidentRecords)
+def delete_related_models(sender, instance, **kwargs):
+    instance.partyinfo_set.all().delete()
+    instance.causeanalysis_set.all().delete()
+    instance.trafficfacilities_set.all().delete()
+    instance.roadconditions_set.all().delete()
