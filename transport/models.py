@@ -69,7 +69,7 @@ class AccidentRecords(models.Model):
 
 class CauseAnalysis(models.Model):
     id = models.AutoField(primary_key=True)
-    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    accident = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE, blank=True, null=True)
 
     class BigCategoryNameJudgmentMain(models.TextChoices):
         FIRST_BIGCATEGORYNAMEJUDGMENTMAIN = "無(非車輛駕駛人因素)", "無(非車輛駕駛人因素)"
@@ -111,7 +111,7 @@ class CauseAnalysis(models.Model):
 
 class PartyInfo(models.Model):
     id = models.AutoField(primary_key=True)
-    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    accident = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE, blank=True, null=True)
     當事者區分_類別_大類別名稱_車種 = models.ForeignKey(VehicleType, models.DO_NOTHING, db_column='當事者區分_類別_大類別名稱_車種', null=True)
     class Gender(models.TextChoices):
         FIRST_GENDER = "男", "男"
@@ -233,7 +233,7 @@ class PartyInfo(models.Model):
 
 class RoadConditions(models.Model):
     id = models.AutoField(primary_key=True)
-    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    accident = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE, blank=True, null=True)
     class BigRoadType(models.TextChoices):
         FIRST_BIGROADTYPE = "平交道", "平交道"
         SECOND_BIGROADTYPE = "單路部分", "單路部分"
@@ -371,7 +371,7 @@ class RoadConditions(models.Model):
 
 class TrafficFacilities(models.Model):
     id = models.AutoField(primary_key=True)
-    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    accident = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE, blank=True, null=True)
     class LogType(models.TextChoices):
         FIRST_LOGTYPE = "行車管制號誌", "行車管制號誌"
         SECOND_LOGTYPE = "無號誌", "無號誌"
