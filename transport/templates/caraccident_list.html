@@ -45,8 +45,8 @@
                             <td>{{ record.處理單位名稱警局層 }}</td>
                             <td>{{ record.發生地點 }}</td>
                             <td>
-                                {% comment %} <a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"> <span class="fa fa-edit"></span> Edit</a>
-                                <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a> {% endcomment %}
+                                <a class="btn btn-sm btn-warning" href="update/{{ record.id }}"> <span class="fa fa-edit"></span> Update</a>
+                                <a class="btn btn-sm btn-danger" href="{% url 'transport:delete' pk=record.id %}"><span class="fa fa-trash"></span> Delete</a>
                             </td>
                         </tr>
                     {% endfor %}

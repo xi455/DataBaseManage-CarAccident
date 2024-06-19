@@ -107,3 +107,79 @@ class CarAccidentCreateView(GroupPerms, generic.View):
         }
 
         return render(request, self.template_name, context=context)
+    
+class CarAccidentUpdateView(GroupPerms, LoginRequiredMixin, UpdateView):
+    model = AccidentRecords
+    form_class = CombinedForm
+    template_name = "caraccident_update.html"
+    success_url = reverse_lazy('transport:list')  # Redirect to the list view upon successful update
+
+    def form_valid(self, form):
+        accident_record = form.save(commit=False)
+        
+        # Handle related objects if needed (similar to your create view)
+
+        # For example, updating related objects if form has separate fields for them
+        # party_info = get_object_or_404(PartyInfo, accident=accident_record)
+        # party_info.field_name = form.cleaned_data['field_name']
+        # party_info.save()
+
+        # Save changes to AccidentRecords model
+        accident_record.save()
+
+        messages.success(self.request, "Car accident record updated successfully.")
+        return super().form_valid(form)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        # You can add additional context data here if needed
+        return context
+
+    def get_object(self, queryset=None):
+        # Get the instance of AccidentRecords based on URL parameter (pk)
+        pk = self.kwargs.get('pk')
+        return get_object_or_404(AccidentRecords, pk=pk)
+
+    def get_initial(self):
+        # Pre-fill form with initial data if needed
+        initial = super().get_initial()
+        # Example: initial data from related models
+        accident_record = self.get_object()
+        # initial['field_name'] = accident_record.related_field_name
+        return initial
+    
+# class CarAccidentDeleteView(GroupPerms, generic.DeleteView):
+#     model = AccidentRecords
+#     template_name = 'caraccident_confirm_delete.html'
+#     success_url = reverse_lazy('transport:list')
+
+#     def get_object(self, queryset=None):
+#         # 根據 URL 參數（pk）獲取 AccidentRecords 的實例
+#         pk = self.kwargs.get('pk')
+#         return get_object_or_404(AccidentRecords, pk=pk)
+
+#     def get(self, request, *args, **kwargs):
+#         # 覆寫 get 方法以添加刪除確認步驟
+#         self.object = self.get_object()
+#         return render(request, self.template_name, {'object': self.object})
+
+#     def post(self, request, *args, **kwargs):
+#         # 覆寫 post 方法以處理刪除確認
+#         self.object = self.get_object()
+#         success_url = self.success_url
+
+#         self.object.delete()
+#         messages.success(request, 'Car accident record deleted successfully.')
+#         return redirect(success_url)
+    
+class CarAccidentDeleteView(DeleteView):
+    model = AccidentRecords
+    template_name = 'caraccident_confirm_delete.html'
+    success_url = reverse_lazy('transport:list')
+
+    def delete(self, request, *args, **kwargs):
+        self.object = self.get_object()
+        success_url = self.get_success_url()
+        self.object.delete()
+        messages.success(request, 'Car accident record deleted successfully.')
+        return redirect(success_url)
