@@ -17,26 +17,17 @@
             {% if accident_id %}
                 <li class="breadcrumb-item active">Edit CRUD</li>
             {% else %}
-                <li class="breadcrumb-item active">add CRUD</li>
+                <li class="breadcrumb-item active">update CRUD</li>
             {% endif %}
         </ol>
         {{ form.non_field_errors }}
-        <form
-            action="{% if record.id %}/update/{{ record.id }}/{% else %}/create/{% endif %}"
-            novalidate
-            class="needs-validation"
-            method="POST"
-            enctype="multipart/form-data">
-            {% csrf_token %}
-
-        <!-- {{ form.non_field_errors }}
         <form
             action=""
             novalidate
             class="needs-validation"
             method="POST"
             enctype="multipart/form-data">
-            {% csrf_token %} -->
+            {% csrf_token %}
             
             <h2 class="mt-4">事故紀錄</h2>
             <div class="bd-example">
@@ -350,29 +341,4 @@
 {% endblock %}
 {% block javascript %}
     <script src="{% static 'js/form_verify.js' %}"></script>
-
-    <script src="{% static 'js/form_verify.js' %}"></script>
-    <script>
-        // 在此添加JavaScript代码以实现加载和填充表单数据的功能
-        // 示例代码如下，具体根据你的前端框架和实际需要进行调整
-
-        // 假设选择记录后触发事件
-        // 例如某个记录被点击时触发加载数据的操作
-        $('.record-item').on('click', function() {
-            var recordId = $(this).data('record-id');  // 假设你有一个数据属性存储了记录ID
-            $.ajax({
-                url: '/api/record/' + recordId + '/',  // 发送请求获取特定记录的数据
-                type: 'GET',
-                success: function(data) {
-                    // 将数据填充到表单中
-                    $('#id_field_name').val(data.field_name);  // 根据实际字段名和数据结构修改
-                    $('#id_another_field').val(data.another_field);
-                    // 依此类推，填充所有表单字段
-                },
-                error: function(err) {
-                    console.error('Error fetching record data: ', err);
-                }
-            });
-        });
-    </script>
 {% endblock %}
