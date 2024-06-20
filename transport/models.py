@@ -1,58 +1,60 @@
 from django.db import models
 
 from transport_subsidiary.models import UnitName, VehicleType
-
+from django.db.models.signals import post_delete
+from django.dispatch import receiver
 
 class AccidentRecords(models.Model):
-    發生年度 = models.CharField(max_length=4)
-    發生月份 = models.CharField(max_length=2)
-    發生日期 = models.CharField(max_length=8)
-    發生時間 = models.CharField(max_length=6)
-    
+    id = models.AutoField(primary_key=True)
+    發生年度 = models.CharField(max_length=4, null=True)
+    發生月份 = models.CharField(max_length=2, null=True)
+    發生日期 = models.CharField(max_length=8, null=True)
+    發生時間 = models.CharField(max_length=6, null=True)
     class AccidentType(models.TextChoices):
         FIRST_ACCIDENTTYPE = "A1", "A1"
         SECOND_ACCIDENTTYPE = "A2", "A2"
 
 
+    # 事故類別名稱 = models.CharField(
+    #     max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
+    # )
+    處理單位名稱警局層 = models.ForeignKey(UnitName, models.DO_NOTHING, db_column='處理單位名稱警局層', null=True)
+    發生地點 = models.CharField(max_length=80, null=True)
+    class AccidentType(models.TextChoices):
+        FIRST_ACCIDENTTYPE = "A1", "A1"
+        SECOND_ACCIDENTTYPE = "A2", "A2"
+
+    class WeatherType(models.TextChoices):
+        FIRST_WEATHERTYPE = "晴", "晴"
+        SECOND_WEATHERTYPE = "雪", "雪"
+        THIRD_WEATHERTYPE = "風沙", "風沙"
+        FOURTH_WEATHERTYPE = "暴雨", "暴雨"
+        FIFTH_WEATHERTYPE = "強風", "強風"
+        SIXTH_WEATHERTYPE = "雨", "雨"
+        SEVENTH_WEATHERTYPE = "陰", "陰"
+        EIGHTH_WEATHERTYPE = "霧或煙", "霧或煙"
+
+    天候名稱 = models.CharField(
+        max_length=10, choices=WeatherType.choices, default=WeatherType.FIRST_WEATHERTYPE
+    )
+    class LightType(models.TextChoices):
+        FIRST_LIGHTTYPE = "夜間(或隧道、地下道、涵洞)有照明", "夜間(或隧道、地下道、涵洞)有照明"
+        SECOND_LIGHTTYPE = "夜間(或隧道、地下道、涵洞)無照明", "夜間(或隧道、地下道、涵洞)無照明"
+        THIRD_LIGHTTYPE = "有照明未開啟或故障", "有照明未開啟或故障"
+        FORTH_LIGHTTYPE = "晨或暮光", "晨或暮光"
+        FIFTH_LIGHTTYPE = "日間自然光線", "日間自然光線"
+
+    光線名稱 = models.CharField(
+        max_length=20, 
+         choices=LightType.choices,
+         default=LightType.FIRST_LIGHTTYPE
+    )
+
     事故類別名稱 = models.CharField(
         max_length=2, choices=AccidentType.choices, default=AccidentType.FIRST_ACCIDENTTYPE
     )
-    
-    處理單位名稱警局層 = models.ForeignKey(UnitName, models.DO_NOTHING, db_column='處理單位名稱警局層', blank=True, null=True)
-    發生地點 = models.CharField(max_length=80)
-
-    class Weather(models.TextChoices):
-        FIRST_WEATHER = "晴", "晴"
-        SECOND_WEATHER = "雪", "雪"
-        THIRD_WEATHER = "風沙", "風沙"
-        FOURTH_WEATHER = "暴雨", "暴雨"
-        FIFTH_WEATHER = "強風", "強風"
-        SIXTH_WEATHER = "雨", "雨"
-        SEVENTH_WEATHER = "陰", "陰"
-        EIGHTH_WEATHER = "霧或煙", "霧或煙"
-
-    天候名稱 = models.CharField(
-        max_length=3, choices=Weather.choices, default=Weather.FIRST_WEATHER
-    )
-
-    class Light(models.TextChoices):
-        FIRST_LIGHT = (
-            "夜間(或隧道、地下道、涵洞)有照明",
-            "夜間(或隧道、地下道、涵洞)有照明",
-        )
-        SECOND_LIGHT = (
-            "夜間(或隧道、地下道、涵洞)無照明",
-            "夜間(或隧道、地下道、涵洞)無照明",
-        )
-        THIRD_LIGHT = "有照明未開啟或故障", "有照明未開啟或故障"
-        FOURTH_LIGHT = "晨或暮光", "晨或暮光"
-        FIFTH_LIGHT = "日間自然光線", "日間自然光線"
-
-    光線名稱 = models.CharField(
-        max_length=20, choices=Light.choices, default=Light.FIRST_LIGHT
-    )
-    經度 = models.DecimalField(max_digits=9, decimal_places=6)
-    緯度 = models.DecimalField(max_digits=9, decimal_places=6)
+    經度 = models.DecimalField(max_digits=9, decimal_places=6, null=True)
+    緯度 = models.DecimalField(max_digits=9, decimal_places=6, null=True)
 
     class Meta:
         verbose_name = "事故紀錄"
@@ -62,16 +64,39 @@ class AccidentRecords(models.Model):
         db_table = 'accident_records'
 
     def __str__(self):
-        return self.發生地點
+        return str(int(self.pk))
 
 
 class CauseAnalysis(models.Model):
-    id = models.IntegerField(primary_key=True)
-    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
-    肇因研判大類別名稱_主要 = models.CharField(max_length=15)
-    肇因研判子類別名稱_主要 = models.CharField(max_length=25)
-    肇因研判子類別名稱_個別 = models.CharField(max_length=25)
-    肇事逃逸類別名稱_是否肇逃 = models.CharField(max_length=2)
+    id = models.AutoField(primary_key=True)
+    accident = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE, blank=True, null=True)
+
+    class BigCategoryNameJudgmentMain(models.TextChoices):
+        FIRST_BIGCATEGORYNAMEJUDGMENTMAIN = "無(非車輛駕駛人因素)", "無(非車輛駕駛人因素)"
+        SECOND_BIGCATEGORYNAMEJUDGMENTMAIN = "無(車輛駕駛人因素)", "無(車輛駕駛人因素)"
+        THIRD_BIGCATEGORYNAMEJUDGMENTMAIN = "機件", "機件"
+        FOURTH_BIGCATEGORYNAMEJUDGMENTMAIN = "裝載", "裝載"
+        FIFTH_BIGCATEGORYNAMEJUDGMENTMAIN = "交通管制(設施)", "交通管制(設施)"
+        SIXTH_BIGCATEGORYNAMEJUDGMENTMAIN = "燈光", "燈光"
+        SEVENTH_BIGCATEGORYNAMEJUDGMENTMAIN = "駕駛人", "駕駛人"
+        EIGHTH_BIGCATEGORYNAMEJUDGMENTMAIN = "行人(或乘客)", "行人(或乘客)"
+        NINETH_BIGCATEGORYNAMEJUDGMENTMAIN = "其他", "其他"
+
+    肇因研判大類別名稱_主要 = models.CharField(
+        max_length=15, choices=BigCategoryNameJudgmentMain.choices, default=BigCategoryNameJudgmentMain.FIRST_BIGCATEGORYNAMEJUDGMENTMAIN
+    )
+    肇因研判子類別名稱_主要 = models.CharField(max_length=25, null=True)
+    肇因研判子類別名稱_個別 = models.CharField(max_length=25, null=True)
+    # class WhetherToEscape(models.TextChoices):
+    #     FIRST_WHETHERTOESCAPE = "A1", "A1"
+    #     SECOND_WHETHERTOESCAPE = "A2", "A2"
+
+
+    # 肇事逃逸類別名稱_是否肇逃 = models.CharField(
+    #     max_length=2, choices=WhetherToEscape.choices, default=WhetherToEscape.FIRST_WHETHERTOESCAPE
+    # )
+
+    肇事逃逸類別名稱_是否肇逃 = models.BooleanField(default=False)
 
     class Meta:
         verbose_name = "原因分析"
@@ -85,10 +110,9 @@ class CauseAnalysis(models.Model):
 
 
 class PartyInfo(models.Model):
-    id = models.IntegerField(primary_key=True)
-    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
-    當事者區分_類別_大類別名稱_車種 = models.ForeignKey(VehicleType, models.DO_NOTHING, db_column='當事者區分_類別_大類別名稱_車種', blank=True, null=True)
-
+    id = models.AutoField(primary_key=True)
+    accident = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE, blank=True, null=True)
+    當事者區分_類別_大類別名稱_車種 = models.ForeignKey(VehicleType, models.DO_NOTHING, db_column='當事者區分_類別_大類別名稱_車種', null=True)
     class Gender(models.TextChoices):
         FIRST_GENDER = "男", "男"
         SECOND_GENDER = "女", "女"
@@ -98,8 +122,7 @@ class PartyInfo(models.Model):
     當事者性別名稱 = models.CharField(
         max_length=15, choices=Gender.choices, default=Gender.FIRST_GENDER
     )
-    當事者事故發生時年齡 = models.IntegerField()
-
+    當事者事故發生時年齡 = models.IntegerField(null=True)
     class ProtectiveEquipment(models.TextChoices):
         FIRST_PROTECTIVEQUIPMENT = "無", "無"
         SECOND_PROTECTIVEQUIPMENT = (
@@ -209,8 +232,8 @@ class PartyInfo(models.Model):
 
 
 class RoadConditions(models.Model):
-    id = models.IntegerField(primary_key=True)
-    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    id = models.AutoField(primary_key=True)
+    accident = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE, blank=True, null=True)
     class BigRoadType(models.TextChoices):
         FIRST_BIGROADTYPE = "平交道", "平交道"
         SECOND_BIGROADTYPE = "單路部分", "單路部分"
@@ -347,8 +370,8 @@ class RoadConditions(models.Model):
 
 
 class TrafficFacilities(models.Model):
-    id = models.IntegerField(primary_key=True)
-    accident = models.ForeignKey(AccidentRecords, models.DO_NOTHING, blank=True, null=True)
+    id = models.AutoField(primary_key=True)
+    accident = models.ForeignKey(AccidentRecords, on_delete=models.CASCADE, blank=True, null=True)
     class LogType(models.TextChoices):
         FIRST_LOGTYPE = "行車管制號誌", "行車管制號誌"
         SECOND_LOGTYPE = "無號誌", "無號誌"
@@ -381,3 +404,10 @@ class TrafficFacilities(models.Model):
 
     def __str__(self):
         return self.號誌_號誌種類名稱
+    
+@receiver(post_delete, sender=AccidentRecords)
+def delete_related_models(sender, instance, **kwargs):
+    instance.partyinfo_set.all().delete()
+    instance.causeanalysis_set.all().delete()
+    instance.trafficfacilities_set.all().delete()
+    instance.roadconditions_set.all().delete()

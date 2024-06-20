@@ -60,10 +60,10 @@ class CauseAnalysisForm(forms.ModelForm):
         exclude = ["accident_id"]
 
         widgets = {
-            "肇因研判大類別名稱_主要": forms.TextInput(attrs={"class": "form-control"}),
+            "肇因研判大類別名稱_主要": forms.Select(attrs={"class": "form-select"}),
             "肇因研判子類別名稱_主要": forms.TextInput(attrs={"class": "form-control"}),
             "肇因研判子類別名稱_個別": forms.TextInput(attrs={"class": "form-control"}),
-            "肇事逃逸類別名稱_是否肇逃": forms.TextInput(attrs={"class": "form-control"}),
+            "肇事逃逸類別名稱_是否肇逃": forms.NullBooleanSelect(attrs={"class": "form-select"}),
         }
 
 class TrafficFacilitiesForm(forms.ModelForm):
@@ -104,3 +104,13 @@ class CombinedForm(forms.Form):
     causeanalysis_form = CauseAnalysisForm(prefix='causeanalysis')
     trafficfacilities_form = TrafficFacilitiesForm(prefix='trafficfacilities')
     road_form = RoadConditionsForm(prefix='road')
+
+    def __init__(self, *args, accident_form=None, party_form=None, causeanalysis_form=None, trafficfacilities_form=None, road_form=None, **kwargs):
+        super(CombinedForm, self).__init__(*args, **kwargs)
+        self.accident_form = accident_form or AccidentRecordsForm(prefix='accident')
+        self.party_form = party_form or PartyInfoForm(prefix='party')
+        self.causeanalysis_form = causeanalysis_form or CauseAnalysisForm(prefix='causeanalysis')
+        self.trafficfacilities_form = trafficfacilities_form or TrafficFacilitiesForm(prefix='trafficfacilities')
+        self.road_form = road_form or RoadConditionsForm(prefix='road')
+
+    
