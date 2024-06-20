@@ -45,8 +45,16 @@
                             <td>{{ record.處理單位名稱警局層 }}</td>
                             <td>{{ record.發生地點 }}</td>
                             <td>
-                                {% comment %} <a class="btn btn-sm btn-warning" href="edit/{{ member.id }}"> <span class="fa fa-edit"></span> Edit</a>
-                                <a class="btn btn-sm btn-danger" href="delete/{{ member.id }}"><span class="fa fa-trash"></span> Delete</a> {% endcomment %}
+                                <div class="text-center">
+                                    <a class="btn btn-sm btn-warning" href="update/{{ record.id }}"> <span class="fa fa-edit"></span> Update</a>                            
+                                </div>
+
+                                {% include 'elements/delete_modal.html' %}
+                                <div class="text-center mt-1">
+                                    <button type="button" class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#DeleteModalCenter">
+                                        <span class="fa fa-trash pe-1 ps-1"></span> Delete
+                                    </button>
+                                </div>
                             </td>
                         </tr>
                     {% endfor %}
@@ -56,6 +64,7 @@
         </div>
     </div>
 {% endblock %}
-{% block javascript %}
 
+{% block javascript %}
+{% static "js/modal.js" %}
 {% endblock %}

@@ -2,9 +2,8 @@ from django.db import models
 
 # Create your models here.
 
-
 class UnitName(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     處理單位名稱警局層 = models.CharField(max_length=10, blank=True, null=True)
 
     class Meta:
@@ -20,7 +19,7 @@ class UnitName(models.Model):
 
 
 class VehicleType(models.Model):
-    id = models.IntegerField(primary_key=True)
+    id = models.AutoField(primary_key=True)
     當事者區分_類別_大類別名稱_車種 = models.CharField(max_length=15, blank=True, null=True)
 
     class Meta:

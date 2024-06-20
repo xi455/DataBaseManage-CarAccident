@@ -29,6 +29,7 @@ urlpatterns = [
     path("transport/", include("transport.urls", namespace="transport")),
     path("error-report/", include("report.urls", namespace="report")),
     path("accounts/", include("users.urls")),
+    path("chart/", include("chart.urls",namespace="chart")),
 ]
 
 urlpatterns += static(

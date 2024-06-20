@@ -1,0 +1,21 @@
+<!-- Delete Modal -->
+<div class="modal fade" id="DeleteModalCenter" tabindex="-1" role="dialog" aria-labelledby="DeleteModalCenterTitle" aria-hidden="true">
+  <div class="modal-dialog modal-dialog-centered" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+          <h5 class="modal-title" id="DeleteModalLongTitle">Delete Modal</h5>
+          <button type="button" class="btn-close" data-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <form action="{% url "transport:delete" record.id %}" method="POST">
+            {% csrf_token %}
+            <div class="modal-body">
+                  確認是否刪除？
+              </div>
+              <div class="modal-footer">
+              {% comment %} <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> {% endcomment %}
+              <button type="submit" class="btn btn-primary">確認</button>
+              </div>
+          </form>
+      </div>
+  </div>
+</div>
