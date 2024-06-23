@@ -17,7 +17,7 @@
             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                 {% if user.is_authenticated %}
                     <li><a class="dropdown-item" href="{% url "user_profile" %}">Settings</a></li>
-                    <li><a class="dropdown-item" href="#!">Activity Log</a></li>
+                    {% comment %} <li><a class="dropdown-item" href="#!">Activity Log</a></li> {% endcomment %}
                     <li><hr class="dropdown-divider" /></li>
                 
                     <form action="{% url "logout" %}" method="POST">
