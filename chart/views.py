@@ -27,8 +27,6 @@ def get_data(request, *args, **kwargs):
 
 
 class ChartData(APIView):
-    authentication_classes = []
-    permission_classes = []
 
     def get(self, request, format=None):
         data = {}

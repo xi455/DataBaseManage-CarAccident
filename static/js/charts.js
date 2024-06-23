@@ -65,8 +65,7 @@ Object.keys(defaultData4).forEach(function(year, index) {
         data: defaultData4[year],
         backgroundColor: colors[colorIndex],
         borderColor: borderColorVariants[colorIndex],
-        borderWidth: 1,
-        fill: false // 确保线条不填充颜色
+        borderWidth: 1
     };
     datasets.push(dataset);
 });
@@ -195,7 +194,7 @@ var myChart1 = new Chart(ctx, {
     });
 
 // A1,A2車禍事件數量
-var myChart2 = new Chart(ctx3, {
+var myChart3 = new Chart(ctx3, {
         type: 'pie',
   
           data: {
@@ -443,6 +442,7 @@ let data7 = [];
                 data: a2Data.map(item => item.value),
                 backgroundColor: colors,
                 borderColor: borderColorVariants,
+                borderWidth: 1
             }]
         },
         options: {
