@@ -30,6 +30,8 @@ urlpatterns = [
     path("error-report/", include("report.urls", namespace="report")),
     path("accounts/", include("users.urls")),
     path("chart/", include("chart.urls",namespace="chart")),
+    path("map/", include("map.urls",namespace="map")),
+    path("map/map/", RedirectView.as_view(url="map/"), name="map_"),
 ]
 
 urlpatterns += static(

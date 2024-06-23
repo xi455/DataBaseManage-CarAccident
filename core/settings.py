@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     "transport_subsidiary",
     "report",
     "chart",
+    "map",
     
     "admin_interface",
     "colorfield",

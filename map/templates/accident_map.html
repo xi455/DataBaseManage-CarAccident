@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+
+{% load static %}
+
+{% block stylesheet %}
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+<!-- Optional theme -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+    <div class="container-fluid px-4">
+        <h1 class="mt-4">Map</h1>
+        <ol class="breadcrumb mb-4">
+            <li class="breadcrumb-item active">Map</li>
+        </ol>
+        <div class="col-xl-12" >
+                <div class="card mb-4">
+                    <div class="card-header">
+                        <i class="fa-solid fa-location-dot"></i>
+                            車禍地圖 - MarkerCluster (只有顯示2000筆)
+                        <select id="yearSelect" onchange="updateMap()">
+                                <option value="">Select Year</option>
+                                {% for year in available_years %}
+                                    <option value="{{ year }}">{{ year }}</option>
+                                {% endfor %}
+                        </select>
+                    </div>
+                    <div class="card-body" url-endpoint='{% url "map:accident_map_json" %}'> 
+                        <div id="map">{{ map_html|safe }}</div>
+                    </div>
+                </div>
+            </div>
+        </div>    
+{% endblock %}
+{% block javascript %}
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" crossorigin="anonymous"></script>
+    
+    <script src="https://cdn.jsdelivr.net/npm/simple-datatables@latest" crossorigin="anonymous"></script>
+    <script src="{% static 'js/datatables-simple-demo.js' %}"></script>
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+            <script src="/static/js/map.js"></script>
+{% endblock %}
